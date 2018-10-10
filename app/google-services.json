@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "588982854715",
+    "firebase_url": "https://atozmovies-13d45.firebaseio.com",
+    "project_id": "atozmovies-13d45",
+    "storage_bucket": "atozmovies-13d45.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588982854715:android:f689f235861a6d8d",
+        "android_client_info": {
+          "package_name": "com.example.niamhtohill.atozmovies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "588982854715-ii8vpqprd3qpjvbr0ap9dc37sk7ttti3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.niamhtohill.atozmovies",
+            "certificate_hash": "75a56f4ba7cf93656610cdcaca14f4e4f1a98593"
+          }
+        },
+        {
+          "client_id": "588982854715-f58rsbh9kbm8hvf7unvmkdqptbak5ajt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8sqtX61B_AFrEx1EQAngjBbm9-N4a3Cg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "588982854715-f58rsbh9kbm8hvf7unvmkdqptbak5ajt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">a-z Movies</string>
+    <string name="email_layout">Email Layout</string>
+    <string name="email_image">Email Image</string>
+    <string name="email_edit_text">Email EditText</string>
+    <string name="password_layout">Password Layout</string>
+    <string name="password_image">Password Image</string>
+    <string name="password_edit_text">Password EditText</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="forgotten"><u><b>Forgotten your password?</b></u></string>
+    <string name="version_number">1.1.12.1078 | a-z Movies 2018</string>
+
+</resources>
