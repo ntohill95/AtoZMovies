@@ -4,48 +4,62 @@ import android.app.Application
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import android.content.Context
+import android.content.Intent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import com.example.niamhtohill.atozmovies.home.HomeActivity
 
 
-class LoginViewModel(private val application: Application )  : ViewModel() {
+class LoginViewModel(private val application: Application) : ViewModel() {
 
-    val email = MutableLiveData<String>().apply {  postValue("niamhtohill95@yahoo.co.uk")}
-    val password = MutableLiveData<String>().apply { postValue("testing1!")}
+    val email = MutableLiveData<String>().apply { postValue("niamhtohill95@yahoo.co.uk") }
+    val password = MutableLiveData<String>().apply { postValue("testing1!") }
+    val showProgressBar = MutableLiveData<Boolean>().apply { postValue(false) }
 
     fun onLoginClicked(view: View) {
-        Toast.makeText(application, "Login clicked", Toast.LENGTH_SHORT).show()
-
+        view.hideKeyboard()
         if (email.value != "" && password.value != "") {
             val email = email.value!!
             val password = password.value!!
+            showProgressBar.postValue(true)
             loginToFirebase(email, password)
+
         } else {
-             Toast.makeText(application, "Please enter valid credentials", Toast.LENGTH_SHORT).show()
+            Toast.makeText(application, "Please enter valid credentials", Toast.LENGTH_SHORT).show()
         }
     }
 
+    private fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
+    }
+
     fun onSignUpClicked(view: View) {
-        if (email.value!= "" && password.value != "") {
-            val email  = email.value!!
-            val password  = password.value!!
+        if (email.value != "" && password.value != "") {
+            val email = email.value!!
+            val password = password.value!!
             createFirebaseAccount(email, password)
         } else {
             Toast.makeText(application, "Please enter valid credentials", Toast.LENGTH_SHORT).show()
         }
-   }
+    }
 
     private fun loginToFirebase(email: String, password: String) {
         mFirebaseAuth!!.signInWithEmailAndPassword(email, password).addOnCompleteListener() { task ->
-                    if (task.isSuccessful) {
-                        Toast.makeText(application, "Successful login", Toast.LENGTH_SHORT).show()
-                        val currentUser = mFirebaseAuth!!.currentUser
+            if (task.isSuccessful) {
+                val currentUser = mFirebaseAuth!!.currentUser
+                //TODO store current user in database
+                showProgressBar.postValue(false)
+                application.startActivity(Intent(application, HomeActivity::class.java))
 
-                    } else {
-                        Toast.makeText(application, "Unsuccessful login", Toast.LENGTH_SHORT).show()
+            } else {
+                showProgressBar.postValue(false)
+                Toast.makeText(application, "Unsuccessful login", Toast.LENGTH_SHORT).show()
 
-                    }
-                }
+            }
+        }
     }
 
     private fun createFirebaseAccount(email: String, password: String) {
@@ -54,7 +68,7 @@ class LoginViewModel(private val application: Application )  : ViewModel() {
                     if (task.isSuccessful) {
                         Toast.makeText(application, "Successful create account", Toast.LENGTH_SHORT).show()
                     } else {
-                       Toast.makeText(application, "Unsuccessful create account", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(application, "Unsuccessful create account", Toast.LENGTH_SHORT).show()
 
                     }
                 }

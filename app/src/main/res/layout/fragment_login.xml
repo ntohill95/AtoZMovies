@@ -18,7 +18,7 @@
         <View
             android:id="@+id/view"
             android:layout_width="300dp"
-            android:layout_height="450dp"
+            android:layout_height="480dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="80dp"
@@ -96,8 +96,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/password"
-                    android:text="@={viewModel.password}"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:text="@={viewModel.password}" />
             </LinearLayout>
 
             <Button
@@ -119,6 +119,14 @@
                 android:background="@color/colorPrimaryDark"
                 android:onClick="@{viewModel::onSignUpClicked}"
                 android:text="@string/sign_up" />
+
+            <ProgressBar
+                android:id="@+id/login_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:visibility="invisible" />
         </LinearLayout>
 
         <Button
