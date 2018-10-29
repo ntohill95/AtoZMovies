@@ -10,22 +10,27 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.example.niamhtohill.atozmovies.home.HomeActivity
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.EmailAuthProvider
 
+lateinit var credentials: AuthCredential
 
 class LoginViewModel(private val application: Application) : ViewModel() {
 
     val email = MutableLiveData<String>().apply { postValue("niamhtohill95@yahoo.co.uk") }
     val password = MutableLiveData<String>().apply { postValue("testing1!") }
     val showProgressBar = MutableLiveData<Boolean>().apply { postValue(false) }
+    val accountCreated = MutableLiveData<Boolean>().apply { postValue(false) }
 
     fun onLoginClicked(view: View) {
         view.hideKeyboard()
         if (email.value != "" && password.value != "") {
             val email = email.value!!
             val password = password.value!!
+
+            credentials = EmailAuthProvider.getCredential(email, password)
             showProgressBar.postValue(true)
             loginToFirebase(email, password)
-
         } else {
             Toast.makeText(application, "Please enter valid credentials", Toast.LENGTH_SHORT).show()
         }
@@ -50,14 +55,12 @@ class LoginViewModel(private val application: Application) : ViewModel() {
         mFirebaseAuth!!.signInWithEmailAndPassword(email, password).addOnCompleteListener() { task ->
             if (task.isSuccessful) {
                 val currentUser = mFirebaseAuth!!.currentUser
-                //TODO store current user in database
+                // TODO store current user in database
                 showProgressBar.postValue(false)
                 application.startActivity(Intent(application, HomeActivity::class.java))
-
             } else {
                 showProgressBar.postValue(false)
                 Toast.makeText(application, "Unsuccessful login", Toast.LENGTH_SHORT).show()
-
             }
         }
     }
@@ -66,10 +69,11 @@ class LoginViewModel(private val application: Application) : ViewModel() {
         mFirebaseAuth!!.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener() { task ->
                     if (task.isSuccessful) {
+                        accountCreated.postValue(true)
                         Toast.makeText(application, "Successful create account", Toast.LENGTH_SHORT).show()
                     } else {
+                        accountCreated.postValue(false)
                         Toast.makeText(application, "Unsuccessful create account", Toast.LENGTH_SHORT).show()
-
                     }
                 }
     }
@@ -81,4 +85,3 @@ class MyViewModelFactory(private val application: Application) : ViewModelProvid
         return LoginViewModel(application) as T
     }
 }
-

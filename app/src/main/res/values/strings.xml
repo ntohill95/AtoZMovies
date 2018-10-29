@@ -13,4 +13,7 @@
     <string name="forgotten"><u><b>Forgotten your password?</b></u></string>
     <string name="version_number">1.1.12.1078 | a-z Movies 2018</string>
 
+    <!--Home screen strings-->
+    <string name="app_title">A-Z Movies</string>
+
 </resources>

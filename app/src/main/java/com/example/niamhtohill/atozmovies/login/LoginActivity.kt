@@ -9,7 +9,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 
 var mFirebaseAnalytics: FirebaseAnalytics? = null
- var mFirebaseAuth: FirebaseAuth? = null
+var mFirebaseAuth: FirebaseAuth? = null
 
 class LoginActivity : AppCompatActivity() {
 
@@ -27,8 +27,8 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val currentUser = mFirebaseAuth!!.currentUser
-        if(currentUser != null){
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
             startActivity(Intent(this, HomeActivity::class.java))
         }
     }
