@@ -2,7 +2,6 @@ package com.example.niamhtohill.atozmovies.home
 
 import android.arch.lifecycle.LifecycleOwner
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.example.niamhtohill.atozmovies.R
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -22,7 +21,7 @@ class HomeActivity : AppCompatActivity(), LifecycleOwner {
 
         supportFragmentManager
                 .beginTransaction()
-                .add(R.id.title_bar_placeholder,TitleBarFragment())
+                .add(R.id.title_bar_placeholder, TitleBarFragment())
                 .add(R.id.central_content_placeholder, FavouritesFragment())
                 .add(R.id.tab_bar_placeholder, TabBarFragment())
                 .commit()

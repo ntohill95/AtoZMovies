@@ -11,9 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.niamhtohill.atozmovies.R
 import com.example.niamhtohill.atozmovies.databinding.FragmentFavouritesBinding
-import com.example.niamhtohill.atozmovies.databinding.FragmentTabBarBinding
 
-class FavouritesFragment :Fragment(){
+class FavouritesFragment : Fragment() {
 
     private var fakeList = ArrayList<String>()
     private lateinit var viewModel: HomeViewModel
@@ -24,7 +23,7 @@ class FavouritesFragment :Fragment(){
         val binding: FragmentFavouritesBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_favourites, container, false)
         val rootView = binding.root
 
-        val listView : RecyclerView = rootView.findViewById(R.id.favourites_list_view)
+        val listView: RecyclerView = rootView.findViewById(R.id.favourites_list_view)
         listView.layoutManager = LinearLayoutManager(this.context)
         listView.adapter = FavouritesAdapter(context!!, generatedFakeData())
         return rootView

@@ -10,17 +10,16 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import com.example.niamhtohill.atozmovies.R
 import com.example.niamhtohill.atozmovies.databinding.FragmentTabBarBinding
-import com.example.niamhtohill.atozmovies.databinding.FragmentTitleBarBinding
 
-class TabBarFragment : Fragment(){
+class TabBarFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
 
-    private lateinit var ticketButton :ImageButton
-    private lateinit var topRatedButton :ImageButton
-    private lateinit var favouritesButton :ImageButton
-    private lateinit var recommendationButton :ImageButton
-    private lateinit var searchButton :ImageButton
+    private lateinit var ticketButton: ImageButton
+    private lateinit var topRatedButton: ImageButton
+    private lateinit var favouritesButton: ImageButton
+    private lateinit var recommendationButton: ImageButton
+    private lateinit var searchButton: ImageButton
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
