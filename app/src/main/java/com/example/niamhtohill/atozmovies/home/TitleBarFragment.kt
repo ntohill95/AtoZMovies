@@ -17,12 +17,13 @@ class TitleBarFragment : Fragment() {
     lateinit var logoutButton: ImageButton
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.fragment_title_bar, container, false)
+        var rootView = inflater.inflate(R.layout.fragment_title_bar, container, false)
         logoutButton = rootView.findViewById(R.id.logout_button)
 
         viewModel = ViewModelProviders.of(this, MyViewModelFactory(requireActivity().application)).get(HomeViewModel::class.java)
-        val binding: FragmentTitleBarBinding = DataBindingUtil.setContentView(requireActivity(), R.layout.fragment_title_bar)
-        binding.viewModel = viewModel
+        val binding: FragmentTitleBarBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_title_bar, container, false)
+        rootView = binding.root
+//        binding.viewModel = viewModel
 
         return rootView
     }

@@ -1,26 +1,32 @@
 package com.example.niamhtohill.atozmovies.home
 
-import android.support.v7.app.AppCompatActivity
+import android.arch.lifecycle.LifecycleOwner
 import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import com.example.niamhtohill.atozmovies.R
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 
 var mFirebaseAnalytics: FirebaseAnalytics? = null
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), LifecycleOwner {
 
-    var fbAuth = FirebaseAuth.getInstance()
+    private var fbAuth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
+
+        setContentView(R.layout.activity_home)
 
         supportFragmentManager
                 .beginTransaction()
-                .add(R.id.title_bar_placeholder, TitleBarFragment())
+                .add(R.id.title_bar_placeholder,TitleBarFragment())
+                .add(R.id.central_content_placeholder, FavouritesFragment())
+                .add(R.id.tab_bar_placeholder, TabBarFragment())
                 .commit()
+
         supportFragmentManager.executePendingTransactions()
 
         fbAuth.addAuthStateListener {
