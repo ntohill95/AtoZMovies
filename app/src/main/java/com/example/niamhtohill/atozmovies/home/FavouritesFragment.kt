@@ -20,15 +20,13 @@ class FavouritesFragment :Fragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        var rootView = inflater.inflate(R.layout.fragment_favourites, container, false)
+        viewModel = ViewModelProviders.of(this, MyViewModelFactory(requireActivity().application)).get(HomeViewModel::class.java)
+        val binding: FragmentFavouritesBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_favourites, container, false)
+        val rootView = binding.root
+
         val listView : RecyclerView = rootView.findViewById(R.id.favourites_list_view)
         listView.layoutManager = LinearLayoutManager(this.context)
         listView.adapter = FavouritesAdapter(context!!, generatedFakeData())
-
-        viewModel = ViewModelProviders.of(this, MyViewModelFactory(requireActivity().application)).get(HomeViewModel::class.java)
-        val binding: FragmentFavouritesBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_favourites, container, false)
-        rootView = binding.root
-
         return rootView
     }
 

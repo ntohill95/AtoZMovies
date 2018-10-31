@@ -24,18 +24,14 @@ class TabBarFragment : Fragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        var rootView = inflater.inflate(R.layout.fragment_tab_bar, container, false)
-
+        viewModel = ViewModelProviders.of(this, MyViewModelFactory(requireActivity().application)).get(HomeViewModel::class.java)
+        val binding: FragmentTabBarBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab_bar, container, false)
+        val rootView = binding.root
         ticketButton = rootView.findViewById(R.id.tickets_button)
         topRatedButton = rootView.findViewById(R.id.top_rated_button)
         favouritesButton = rootView.findViewById(R.id.favourites_button)
         recommendationButton = rootView.findViewById(R.id.recommendations_button)
         searchButton = rootView.findViewById(R.id.search_button)
-
-        viewModel = ViewModelProviders.of(this, MyViewModelFactory(requireActivity().application)).get(HomeViewModel::class.java)
-        val binding: FragmentTabBarBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab_bar, container, false)
-        rootView = binding.root
-//        binding.viewModel = viewModel
 
         return rootView
     }
