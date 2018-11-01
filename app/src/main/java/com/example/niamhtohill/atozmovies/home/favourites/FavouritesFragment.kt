@@ -1,4 +1,4 @@
-package com.example.niamhtohill.atozmovies.home
+package com.example.niamhtohill.atozmovies.home.favourites
 
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
@@ -12,6 +12,8 @@ import android.view.ViewGroup
 import com.example.niamhtohill.atozmovies.BR
 import com.example.niamhtohill.atozmovies.R
 import com.example.niamhtohill.atozmovies.databinding.FragmentFavouritesBinding
+import com.example.niamhtohill.atozmovies.home.HomeViewModel
+import com.example.niamhtohill.atozmovies.home.MyViewModelFactory
 
 class FavouritesFragment : Fragment() {
 

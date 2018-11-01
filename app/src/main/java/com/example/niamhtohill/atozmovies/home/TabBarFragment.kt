@@ -14,6 +14,7 @@ import com.example.niamhtohill.atozmovies.databinding.FragmentTabBarBinding
 
 class TabBarFragment : Fragment() {
 
+    private lateinit var tabBarClickable: TabBarClickable
     private lateinit var viewModel: HomeViewModel
 
     private lateinit var ticketButton: ImageButton
@@ -30,6 +31,9 @@ class TabBarFragment : Fragment() {
 
         val rootView = binding.root
         ticketButton = rootView.findViewById(R.id.tickets_button)
+        ticketButton.setOnClickListener(){
+            tabBarClickable.ticketButtonClicked()
+        }
         topRatedButton = rootView.findViewById(R.id.top_rated_button)
         favouritesButton = rootView.findViewById(R.id.favourites_button)
         recommendationButton = rootView.findViewById(R.id.recommendations_button)
@@ -37,4 +41,8 @@ class TabBarFragment : Fragment() {
 
         return rootView
     }
+}
+
+interface TabBarClickable {
+    fun ticketButtonClicked()
 }

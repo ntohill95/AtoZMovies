@@ -1,4 +1,4 @@
-package com.example.niamhtohill.atozmovies.home
+package com.example.niamhtohill.atozmovies.home.favourites
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
