@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import com.example.niamhtohill.atozmovies.BR
 import com.example.niamhtohill.atozmovies.R
 import com.example.niamhtohill.atozmovies.databinding.FragmentTitleBarBinding
 
@@ -20,7 +21,10 @@ class TitleBarFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this, MyViewModelFactory(requireActivity().application)).get(HomeViewModel::class.java)
         val binding: FragmentTitleBarBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_title_bar, container, false)
+        binding.setVariable(BR.viewModel, viewModel)
+
         val rootView = binding.root
+
         logoutButton = rootView.findViewById(R.id.logout_button)
         return rootView
     }

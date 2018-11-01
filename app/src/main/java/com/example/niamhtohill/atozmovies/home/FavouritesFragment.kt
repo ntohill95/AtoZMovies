@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.niamhtohill.atozmovies.BR
 import com.example.niamhtohill.atozmovies.R
 import com.example.niamhtohill.atozmovies.databinding.FragmentFavouritesBinding
 
@@ -21,6 +22,7 @@ class FavouritesFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this, MyViewModelFactory(requireActivity().application)).get(HomeViewModel::class.java)
         val binding: FragmentFavouritesBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_favourites, container, false)
+        binding.setVariable(BR.viewModel, viewModel)
         val rootView = binding.root
 
         val listView: RecyclerView = rootView.findViewById(R.id.favourites_list_view)

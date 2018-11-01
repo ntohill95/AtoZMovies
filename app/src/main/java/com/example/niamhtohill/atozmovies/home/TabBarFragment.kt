@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import com.example.niamhtohill.atozmovies.BR
 import com.example.niamhtohill.atozmovies.R
 import com.example.niamhtohill.atozmovies.databinding.FragmentTabBarBinding
 
@@ -25,6 +26,8 @@ class TabBarFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this, MyViewModelFactory(requireActivity().application)).get(HomeViewModel::class.java)
         val binding: FragmentTabBarBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab_bar, container, false)
+        binding.setVariable(BR.viewModel, viewModel)
+
         val rootView = binding.root
         ticketButton = rootView.findViewById(R.id.tickets_button)
         topRatedButton = rootView.findViewById(R.id.top_rated_button)
