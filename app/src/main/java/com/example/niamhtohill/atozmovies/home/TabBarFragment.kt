@@ -1,6 +1,7 @@
 package com.example.niamhtohill.atozmovies.home
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -17,8 +18,8 @@ class TabBarFragment : Fragment() {
     private lateinit var tabBarClickable: TabBarClickable
     private lateinit var viewModel: HomeViewModel
 
-    private lateinit var ticketButton: ImageButton
-    private lateinit var topRatedButton: ImageButton
+     lateinit var ticketButton: ImageButton
+     lateinit var topRatedButton: ImageButton
     private lateinit var favouritesButton: ImageButton
     private lateinit var recommendationButton: ImageButton
     private lateinit var searchButton: ImageButton
@@ -35,14 +36,38 @@ class TabBarFragment : Fragment() {
             tabBarClickable.ticketButtonClicked()
         }
         topRatedButton = rootView.findViewById(R.id.top_rated_button)
+        topRatedButton.setOnClickListener{
+            tabBarClickable.topMovieButtonClicked()
+        }
         favouritesButton = rootView.findViewById(R.id.favourites_button)
+        favouritesButton.setOnClickListener(){
+            tabBarClickable.favouriteButtonClicked()
+        }
         recommendationButton = rootView.findViewById(R.id.recommendations_button)
+        recommendationButton.setOnClickListener{
+            tabBarClickable.recommendationButtonClicked()
+        }
         searchButton = rootView.findViewById(R.id.search_button)
-
+        searchButton.setOnClickListener{
+            tabBarClickable.searchButtonClicked()
+        }
         return rootView
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context is TabBarClickable) {
+            tabBarClickable = context
+        } else {
+            throw ClassCastException(context.toString())
+        }
     }
 }
 
 interface TabBarClickable {
     fun ticketButtonClicked()
+    fun favouriteButtonClicked()
+    fun topMovieButtonClicked()
+    fun recommendationButtonClicked()
+    fun searchButtonClicked()
 }

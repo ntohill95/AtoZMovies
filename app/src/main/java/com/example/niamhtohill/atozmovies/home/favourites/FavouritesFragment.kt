@@ -29,11 +29,13 @@ class FavouritesFragment : Fragment() {
 
         val listView: RecyclerView = rootView.findViewById(R.id.favourites_list_view)
         listView.layoutManager = LinearLayoutManager(this.context)
-        listView.adapter = FavouritesAdapter(context!!, generatedFakeData())
+            listView.adapter = FavouritesAdapter(context!!, generatedFakeData())
+
         return rootView
     }
 
     private fun generatedFakeData(): ArrayList<String> {
+        fakeList.clear()
         fakeList.add("Movie Title 1")
         fakeList.add("Movie Title 2")
         fakeList.add("Movie Title 3")

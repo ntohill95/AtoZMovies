@@ -1,4 +1,4 @@
-package com.example.niamhtohill.atozmovies.home.tickets
+package com.example.niamhtohill.atozmovies.home
 
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
@@ -11,24 +11,22 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.niamhtohill.atozmovies.BR
 import com.example.niamhtohill.atozmovies.R
-import com.example.niamhtohill.atozmovies.databinding.FragmentTicketsBinding
-import com.example.niamhtohill.atozmovies.home.HomeViewModel
-import com.example.niamhtohill.atozmovies.home.MyViewModelFactory
+import com.example.niamhtohill.atozmovies.databinding.FragmentSearchBinding
 
-class TicketsFragment : Fragment() {
+class SearchFragment : Fragment(){
 
-    private var fakeList = ArrayList<String>()
     private lateinit var viewModel: HomeViewModel
+    private var fakeList = ArrayList<String>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         viewModel = ViewModelProviders.of(this, MyViewModelFactory(requireActivity().application)).get(HomeViewModel::class.java)
-        val binding: FragmentTicketsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_tickets, container, false)
+        val binding: FragmentSearchBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
         binding.setVariable(BR.viewModel, viewModel)
         val rootView = binding.root
-        val listView: RecyclerView = rootView.findViewById(R.id.cinema_tickets_list_view)
+        val listView: RecyclerView = rootView.findViewById(R.id.search_list_view)
         listView.layoutManager = LinearLayoutManager(this.context)
-        listView.adapter = TicketsAdapter(context!!, generatedFakeData())
+        listView.adapter = SearchAdapter(context!!, generatedFakeData())
         return rootView
     }
 

@@ -1,4 +1,4 @@
-package com.example.niamhtohill.atozmovies.home.tickets
+package com.example.niamhtohill.atozmovies.home.topMovies
 
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
@@ -11,39 +11,40 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.niamhtohill.atozmovies.BR
 import com.example.niamhtohill.atozmovies.R
-import com.example.niamhtohill.atozmovies.databinding.FragmentTicketsBinding
+import com.example.niamhtohill.atozmovies.databinding.FragmentTopMoviesBinding
 import com.example.niamhtohill.atozmovies.home.HomeViewModel
 import com.example.niamhtohill.atozmovies.home.MyViewModelFactory
 
-class TicketsFragment : Fragment() {
+class TopMoviesFragment : Fragment() {
 
-    private var fakeList = ArrayList<String>()
     private lateinit var viewModel: HomeViewModel
+    private var fakeList = ArrayList<String>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         viewModel = ViewModelProviders.of(this, MyViewModelFactory(requireActivity().application)).get(HomeViewModel::class.java)
-        val binding: FragmentTicketsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_tickets, container, false)
+        val binding: FragmentTopMoviesBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_top_movies, container, false)
         binding.setVariable(BR.viewModel, viewModel)
         val rootView = binding.root
-        val listView: RecyclerView = rootView.findViewById(R.id.cinema_tickets_list_view)
+
+        val listView: RecyclerView = rootView.findViewById(R.id.top_movies_list_view)
         listView.layoutManager = LinearLayoutManager(this.context)
-        listView.adapter = TicketsAdapter(context!!, generatedFakeData())
+        listView.adapter = TopMoviesAdapter(context!!, generatedFakeData())
         return rootView
     }
 
     private fun generatedFakeData(): ArrayList<String> {
         fakeList.clear()
-        fakeList.add("MovieHouse - Dublin Road")
-        fakeList.add("MovieHouse - Dublin Road")
-        fakeList.add("MovieHouse - Dublin Road")
-        fakeList.add("MovieHouse - Dublin Road")
-        fakeList.add("MovieHouse - Dublin Road")
-        fakeList.add("MovieHouse - Dublin Road")
-        fakeList.add("MovieHouse - Dublin Road")
-        fakeList.add("MovieHouse - Dublin Road")
-        fakeList.add("MovieHouse - Dublin Road")
-        fakeList.add("MovieHouse - Dublin Road")
+        fakeList.add("Ghostbusters")
+        fakeList.add("Ghostbusters")
+        fakeList.add("Ghostbusters")
+        fakeList.add("Ghostbusters")
+        fakeList.add("Ghostbusters")
+        fakeList.add("Ghostbusters")
+        fakeList.add("Ghostbusters")
+        fakeList.add("Ghostbusters")
+        fakeList.add("Ghostbusters")
+        fakeList.add("Ghostbusters")
         return fakeList
     }
 }

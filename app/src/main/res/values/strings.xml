@@ -15,5 +15,10 @@
 
     <!--Home screen strings-->
     <string name="app_title">A-Z Movies</string>
+    <string name="favourites">Favourites</string>
+    <string name="top_movies">Top Rated</string>
+    <string name="tickets">Cinemas</string>
+    <string name="recommendations">Movies for You</string>
+    <string name="search">Search</string>
 
 </resources>
