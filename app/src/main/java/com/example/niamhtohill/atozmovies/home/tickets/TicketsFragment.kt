@@ -2,6 +2,7 @@ package com.example.niamhtohill.atozmovies.home.tickets
 
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -11,17 +12,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.example.niamhtohill.atozmovies.BR
 import com.example.niamhtohill.atozmovies.R
 import com.example.niamhtohill.atozmovies.api.CinemaPostcodeService
 import com.example.niamhtohill.atozmovies.databinding.FragmentTicketsBinding
 import com.example.niamhtohill.atozmovies.home.HomeViewModel
 import com.example.niamhtohill.atozmovies.home.MyViewModelFactory
+import com.example.niamhtohill.atozmovies.utils.CheckInternet
+import com.example.niamhtohill.atozmovies.utils.hasActiveInternetConnection
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 class TicketsFragment : Fragment() {
+
 
     private var fakeList = ArrayList<String>()
     private lateinit var viewModel: HomeViewModel
@@ -56,7 +61,7 @@ class TicketsFragment : Fragment() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        { result -> println("*********" + result) },
+                        { result -> println("********* Postcode Result = " + result.postcode) },
                         { error -> println("*******error = " + error) }
                 )
     }
