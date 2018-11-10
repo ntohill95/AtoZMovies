@@ -18,7 +18,6 @@ class TopMoviesAdapter(private var context: Context, private val topMovieList: A
     override fun onBindViewHolder(p0: TopMoviesViewHolder, p1: Int) {
         val movieTitle = topMovieList[p1]
         p0.topMovieTitle.text = movieTitle
-        p0.topMovieRating.text = (p1+1).toString() + " ."
+        p0.topMovieRating.text = (p1 + 1).toString() + " ."
     }
-
 }

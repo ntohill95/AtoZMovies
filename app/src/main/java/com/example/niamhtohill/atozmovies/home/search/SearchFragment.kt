@@ -1,4 +1,4 @@
-package com.example.niamhtohill.atozmovies.home
+package com.example.niamhtohill.atozmovies.home.search
 
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
@@ -12,8 +12,10 @@ import android.view.ViewGroup
 import com.example.niamhtohill.atozmovies.BR
 import com.example.niamhtohill.atozmovies.R
 import com.example.niamhtohill.atozmovies.databinding.FragmentSearchBinding
+import com.example.niamhtohill.atozmovies.home.HomeViewModel
+import com.example.niamhtohill.atozmovies.home.MyViewModelFactory
 
-class SearchFragment : Fragment(){
+class SearchFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
     private var fakeList = ArrayList<String>()

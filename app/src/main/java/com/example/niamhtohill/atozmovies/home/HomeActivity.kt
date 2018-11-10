@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import com.example.niamhtohill.atozmovies.R
 import com.example.niamhtohill.atozmovies.home.favourites.FavouritesFragment
 import com.example.niamhtohill.atozmovies.home.recommendation.RecommendationFragment
+import com.example.niamhtohill.atozmovies.home.search.SearchFragment
 import com.example.niamhtohill.atozmovies.home.tickets.TicketsFragment
 import com.example.niamhtohill.atozmovies.home.topMovies.TopMoviesFragment
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -23,7 +24,6 @@ class HomeActivity : AppCompatActivity(), LifecycleOwner, TabBarClickable {
     private var ticketsFragment = TicketsFragment()
     private var recommendationFragment = RecommendationFragment()
     private var searchFragment = SearchFragment()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +51,6 @@ class HomeActivity : AppCompatActivity(), LifecycleOwner, TabBarClickable {
                 .commit()
         supportFragmentManager.executePendingTransactions()
         titleBarFragment.titleBarTextView.text = resources.getString(R.string.tickets)
-
     }
 
     override fun favouriteButtonClicked() {
@@ -70,7 +69,6 @@ class HomeActivity : AppCompatActivity(), LifecycleOwner, TabBarClickable {
                 .commit()
         supportFragmentManager.executePendingTransactions()
         titleBarFragment.titleBarTextView.text = resources.getString(R.string.top_movies)
-
     }
 
     override fun recommendationButtonClicked() {

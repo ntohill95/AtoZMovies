@@ -20,5 +20,4 @@ class TicketsAdapter(private var context: Context, private val cinemaList: Array
         val itemString: String = cinemaList[p1]
         p0.cinemaNameTextView.text = itemString
     }
-
 }

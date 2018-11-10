@@ -1,4 +1,4 @@
-package com.example.niamhtohill.atozmovies.home
+package com.example.niamhtohill.atozmovies.home.search
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -19,5 +19,4 @@ class SearchAdapter(private var context: Context, private val movieList: ArrayLi
         val movieTitle = movieList[p1]
         p0.movieTitleName.text = movieTitle
     }
-
 }

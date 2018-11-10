@@ -15,7 +15,7 @@ import com.example.niamhtohill.atozmovies.databinding.FragmentRecommendationBind
 import com.example.niamhtohill.atozmovies.home.HomeViewModel
 import com.example.niamhtohill.atozmovies.home.MyViewModelFactory
 
-class RecommendationFragment : Fragment(){
+class RecommendationFragment : Fragment() {
 
     private var fakeList = ArrayList<String>()
     private lateinit var viewModel: HomeViewModel

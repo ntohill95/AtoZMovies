@@ -17,7 +17,7 @@ class TitleBarFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
     lateinit var logoutButton: ImageButton
-    lateinit var titleBarTextView : TextView
+    lateinit var titleBarTextView: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 

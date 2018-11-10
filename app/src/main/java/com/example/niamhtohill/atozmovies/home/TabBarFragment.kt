@@ -32,23 +32,23 @@ class TabBarFragment : Fragment() {
 
         val rootView = binding.root
         ticketButton = rootView.findViewById(R.id.tickets_button)
-        ticketButton.setOnClickListener(){
+        ticketButton.setOnClickListener() {
             tabBarClickable.ticketButtonClicked()
         }
         topRatedButton = rootView.findViewById(R.id.top_rated_button)
-        topRatedButton.setOnClickListener{
+        topRatedButton.setOnClickListener {
             tabBarClickable.topMovieButtonClicked()
         }
         favouritesButton = rootView.findViewById(R.id.favourites_button)
-        favouritesButton.setOnClickListener(){
+        favouritesButton.setOnClickListener() {
             tabBarClickable.favouriteButtonClicked()
         }
         recommendationButton = rootView.findViewById(R.id.recommendations_button)
-        recommendationButton.setOnClickListener{
+        recommendationButton.setOnClickListener {
             tabBarClickable.recommendationButtonClicked()
         }
         searchButton = rootView.findViewById(R.id.search_button)
-        searchButton.setOnClickListener{
+        searchButton.setOnClickListener {
             tabBarClickable.searchButtonClicked()
         }
         return rootView
