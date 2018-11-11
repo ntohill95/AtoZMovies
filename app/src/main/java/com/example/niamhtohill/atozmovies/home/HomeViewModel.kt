@@ -1,12 +1,18 @@
 package com.example.niamhtohill.atozmovies.home
 
 import android.app.Application
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Intent
 import android.view.View
+import com.example.niamhtohill.atozmovies.api.CinemaPostcodeService
+import com.example.niamhtohill.atozmovies.api.Models
 import com.example.niamhtohill.atozmovies.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
 class HomeViewModel(private val application: Application) : ViewModel() {
 
@@ -18,6 +24,23 @@ class HomeViewModel(private val application: Application) : ViewModel() {
         println("*********LOGOUT CLICKED")
         FirebaseAuth.getInstance().signOut()
         application.startActivity(Intent(application, LoginActivity::class.java))
+    }
+
+    private var disposable: Disposable? = null
+    private val cinemaPostcodeService by lazy {
+        CinemaPostcodeService.create()
+    }
+    var listOfLocalCinemas = MutableLiveData<List<Models.Cinema>>()
+
+    fun onPostcodeSearch(postcode: String) {
+        disposable = cinemaPostcodeService
+                .fetchCinemasPostcode(postcode)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { result -> listOfLocalCinemas.postValue(result.cinemas) },
+                        { error -> println("*******error = " + error) }
+                )
     }
 }
 

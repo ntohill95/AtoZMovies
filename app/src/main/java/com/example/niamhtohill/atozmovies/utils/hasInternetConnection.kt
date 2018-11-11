@@ -8,16 +8,12 @@ import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
 
-
-class CheckInternet(private var context: Context) : AsyncTask<Void, Void, Boolean>(){
-
+class CheckInternet(private var context: Context) : AsyncTask<Void, Void, Boolean>() {
 
     override fun doInBackground(vararg p0: Void?): Boolean {
         return hasActiveInternetConnection(context)
     }
 }
-
-
 
 fun isNetworkAvailable(context: Context): Boolean {
     val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

@@ -1,5 +1,6 @@
 package com.example.niamhtohill.atozmovies.home.tickets
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.databinding.DataBindingUtil
@@ -13,30 +14,20 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import com.example.niamhtohill.atozmovies.BR
 import com.example.niamhtohill.atozmovies.R
-import com.example.niamhtohill.atozmovies.api.CinemaPostcodeService
-import com.example.niamhtohill.atozmovies.api.Models
 import com.example.niamhtohill.atozmovies.databinding.FragmentTicketsBinding
 import com.example.niamhtohill.atozmovies.home.HomeViewModel
 import com.example.niamhtohill.atozmovies.home.MyViewModelFactory
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 
 class TicketsFragment : Fragment() {
-
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var postcodeEditText: EditText
     private lateinit var submitPostcodeButton: Button
-    private lateinit var listView:RecyclerView
-    private var postcode:String =""
-
-    private var disposable: Disposable? = null
-    private val cinemaPostcodeService by lazy {
-        CinemaPostcodeService.create()
-    }
+    private lateinit var listView: RecyclerView
+    private lateinit var noCinemasTextView: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -48,27 +39,23 @@ class TicketsFragment : Fragment() {
         listView.layoutManager = LinearLayoutManager(this.context)
         postcodeEditText = rootView.findViewById(R.id.search_cinemas_near)
         submitPostcodeButton = rootView.findViewById(R.id.submit_postcode)
+        noCinemasTextView = rootView.findViewById(R.id.no_cinemas_found_textview)
         submitPostcodeButton.setOnClickListener {
             view!!.hideKeyboard()
-            cinemaPostcodeSearch(postcodeEditText.text.toString())
+            viewModel.onPostcodeSearch(postcodeEditText.text.toString())
         }
+        viewModel.listOfLocalCinemas.observe(this, Observer {
+            noCinemasTextView.visibility = View.INVISIBLE
+            listView.adapter = TicketsAdapter(context!!, viewModel.listOfLocalCinemas.value!!)
+            if (viewModel.listOfLocalCinemas.value!!.size == 0) {
+                noCinemasTextView.visibility = View.VISIBLE
+            }
+        })
         return rootView
     }
 
-    private fun cinemaPostcodeSearch(postcode: String) {
-        disposable = cinemaPostcodeService
-                .fetchCinemasPostcode(postcode)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { result -> listView.adapter = TicketsAdapter(context!!, (result.cinemas)) },
-                        { error -> println("*******error = " + error) }
-                )
-    }
-
-    fun View.hideKeyboard() {
+    private fun View.hideKeyboard() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
-
 }

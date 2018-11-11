@@ -18,8 +18,8 @@ class TabBarFragment : Fragment() {
     private lateinit var tabBarClickable: TabBarClickable
     private lateinit var viewModel: HomeViewModel
 
-     lateinit var ticketButton: ImageButton
-     lateinit var topRatedButton: ImageButton
+    lateinit var ticketButton: ImageButton
+    lateinit var topRatedButton: ImageButton
     private lateinit var favouritesButton: ImageButton
     private lateinit var recommendationButton: ImageButton
     private lateinit var searchButton: ImageButton
