@@ -45,7 +45,7 @@ class HomeViewModel(private val application: Application) : ViewModel() {
                 )
     }
 
-    fun updateSelectedCinema(cinemaName:String){
+    fun updateSelectedCinema(cinemaName: String) {
         selectedCinema.postValue(cinemaName)
     }
 }

@@ -11,17 +11,30 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_content">
 
-        <TextView
-            android:id="@+id/test"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/cinema_showings_listview"
+            android:fadingEdge="none"
+            android:overScrollMode="never"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ProgressBar
+            android:id="@+id/loading_spinner_showings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="cinema showings"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/cinema_showings_listview" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

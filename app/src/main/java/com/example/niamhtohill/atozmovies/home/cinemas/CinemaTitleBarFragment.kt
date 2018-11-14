@@ -33,5 +33,4 @@ class CinemaTitleBarFragment : Fragment() {
 
         return rootView
     }
-
 }

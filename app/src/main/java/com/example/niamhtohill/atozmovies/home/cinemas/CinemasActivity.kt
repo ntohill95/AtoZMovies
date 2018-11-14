@@ -8,14 +8,12 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.example.niamhtohill.atozmovies.R
-import com.example.niamhtohill.atozmovies.login.LoginViewModel
-import com.example.niamhtohill.atozmovies.login.MyViewModelFactory
 
-class CinemasActivity :AppCompatActivity(), LifecycleOwner {
+class CinemasActivity : AppCompatActivity(), LifecycleOwner {
 
-    private var cinemaTitleBarFragment= CinemaTitleBarFragment()
+    private var cinemaTitleBarFragment = CinemaTitleBarFragment()
     private var cinemaShowingsFragment = CinemaShowingsFragment()
-    private lateinit var viewModel: CinemasViewModel
+    lateinit var viewModel: CinemasViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -23,13 +21,13 @@ class CinemasActivity :AppCompatActivity(), LifecycleOwner {
         setContentView(R.layout.activity_cinema)
 
         val bundle = intent.extras!!
-        val cinemaNameBundle= bundle["cinemaName"] as String
+        val cinemaNameBundle = bundle["cinemaName"] as String
         val cinemaId = bundle["cinemaId"] as String
 
         viewModel = ViewModelProviders.of(this, MyCinemaViewModelFactory(this.application)).get(CinemasViewModel::class.java)
         viewModel.selectedCinemaName.postValue(cinemaNameBundle)
         viewModel.selectedCinemaId.postValue(cinemaId)
-
+        viewModel.fetchCinemaShowings(cinemaId)
 
         supportFragmentManager
                 .beginTransaction()

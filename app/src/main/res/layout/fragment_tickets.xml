@@ -13,8 +13,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@drawable/gradient_content"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_content">
 
         <LinearLayout
             android:id="@+id/postcode_edit_text_linear_layout"
@@ -27,18 +27,19 @@
                 android:id="@+id/search_cinemas_near"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_weight="3"
                 android:layout_margin="10dp"
+                android:layout_weight="3"
                 android:hint="Enter Postcode" />
 
             <Button
                 android:id="@+id/submit_postcode"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/search"/>
+                android:text="@string/search" />
         </LinearLayout>
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/cinema_tickets_list_view"
@@ -53,6 +54,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/postcode_edit_text_linear_layout" />
+
 
         <TextView
             android:id="@+id/no_cinemas_found_textview"

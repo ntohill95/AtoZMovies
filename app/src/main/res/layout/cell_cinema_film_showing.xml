@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="100dp">
+
+        <TextView
+            android:id="@+id/movie_showing_name_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            android:gravity="bottom"
+            android:text="movie title"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/movie_showing_times_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="12:00, 16:00"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

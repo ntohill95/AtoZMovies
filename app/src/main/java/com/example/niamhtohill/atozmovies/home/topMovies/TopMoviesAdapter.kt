@@ -8,7 +8,7 @@ import com.example.niamhtohill.atozmovies.R
 
 class TopMoviesAdapter(private var context: Context, private val topMovieList: ArrayList<String>) : RecyclerView.Adapter<TopMoviesViewHolder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): TopMoviesViewHolder {
-        return TopMoviesViewHolder(LayoutInflater.from(context).inflate(R.layout.top_movies_cell, p0, false))
+        return TopMoviesViewHolder(LayoutInflater.from(context).inflate(R.layout.cell_top_movies, p0, false))
     }
 
     override fun getItemCount(): Int {

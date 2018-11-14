@@ -1,27 +1,38 @@
 package com.example.niamhtohill.atozmovies.home.cinemas
 
-import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
+import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.niamhtohill.atozmovies.BR
+import android.widget.ProgressBar
 import com.example.niamhtohill.atozmovies.R
-import com.example.niamhtohill.atozmovies.databinding.FragmentCinemaShowingsBinding
 
 class CinemaShowingsFragment : Fragment() {
 
-    private lateinit var viewModel: CinemasViewModel
+    private lateinit var cinemaShowingsListView: RecyclerView
+    private lateinit var progressSpinner: ProgressBar
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val parentActivity = activity as CinemasActivity
+        val rootView = inflater.inflate(R.layout.fragment_cinema_showings, container, false)
 
-        viewModel = ViewModelProviders.of(this, MyCinemaViewModelFactory(requireActivity().application)).get(CinemasViewModel::class.java)
-        val binding: FragmentCinemaShowingsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_cinema_showings, container, false)
-        binding.setVariable(BR.viewModel, viewModel)
-        val rootView = binding.root
+        progressSpinner = rootView.findViewById(R.id.loading_spinner_showings)
+        cinemaShowingsListView = rootView.findViewById(R.id.cinema_showings_listview)
+        cinemaShowingsListView.layoutManager = LinearLayoutManager(this.context)
 
+        parentActivity.viewModel.showingsFetched.observe(this, Observer {
+            if (parentActivity.viewModel.showingsFetched.value!!) {
+                val showingsAdapter = CinemaShowingsAdapter(context!!, parentActivity.viewModel.listOfShowings.value!!)
+                progressSpinner.visibility = View.GONE
+                cinemaShowingsListView.adapter = showingsAdapter
+            } else {
+                progressSpinner.visibility = View.VISIBLE
+            }
+        })
         return rootView
     }
 }

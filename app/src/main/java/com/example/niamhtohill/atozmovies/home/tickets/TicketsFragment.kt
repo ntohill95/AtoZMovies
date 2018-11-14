@@ -21,7 +21,6 @@ import com.example.niamhtohill.atozmovies.databinding.FragmentTicketsBinding
 import com.example.niamhtohill.atozmovies.home.HomeViewModel
 import com.example.niamhtohill.atozmovies.home.MyViewModelFactory
 
-
 class TicketsFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
@@ -41,6 +40,7 @@ class TicketsFragment : Fragment() {
         postcodeEditText = rootView.findViewById(R.id.search_cinemas_near)
         submitPostcodeButton = rootView.findViewById(R.id.submit_postcode)
         noCinemasTextView = rootView.findViewById(R.id.no_cinemas_found_textview)
+
         submitPostcodeButton.setOnClickListener {
             view!!.hideKeyboard()
             viewModel.onPostcodeSearch(postcodeEditText.text.toString())
@@ -49,7 +49,7 @@ class TicketsFragment : Fragment() {
             noCinemasTextView.visibility = View.INVISIBLE
             val ticketsAdapter = TicketsAdapter(context!!, viewModel.listOfLocalCinemas.value!!)
             listView.adapter = ticketsAdapter
-            ticketsAdapter.setListener(object : TicketsAdapter.AdapterListener{
+            ticketsAdapter.setListener(object : TicketsAdapter.AdapterListener {
                 override fun cinemaSelected(name: String) {
                     viewModel.updateSelectedCinema(name)
                 }
@@ -58,7 +58,6 @@ class TicketsFragment : Fragment() {
                 noCinemasTextView.visibility = View.VISIBLE
             }
         })
-
 
         return rootView
     }

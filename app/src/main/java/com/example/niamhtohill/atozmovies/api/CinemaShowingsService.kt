@@ -13,16 +13,16 @@ interface CinemaShowingsService {
     fun fetchCinemaShowings(@Path("venue_id") venueId: String): Single<List<Models.MoviesApiShowings>>
 
     companion object {
-        fun create(): CinemaPostcodeService {
+        fun create(): CinemaShowingsService {
             val retrofit = Retrofit.Builder()
                     .client(client)
                     .addCallAdapterFactory(
                             RxJava2CallAdapterFactory.create())
                     .addConverterFactory(
                             GsonConverterFactory.create())
-                    .baseUrl("http://api.cinelist.co.uk/")
+                    .baseUrl("http://moviesapi.herokuapp.com/")
                     .build()
-            return retrofit.create(CinemaPostcodeService::class.java)
+            return retrofit.create(CinemaShowingsService::class.java)
         }
     }
 }
