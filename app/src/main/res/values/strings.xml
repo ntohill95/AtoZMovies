@@ -22,6 +22,6 @@
     <string name="search">Search</string>
 
     <!-- Tickets Fragment-->
-    <string name="no_cinemas_found">Sorry! There seem there is no available cinemas in your area...</string>
+    <string name="no_cinemas_found">Sorry! There seems there is no available cinemas in your area...</string>
 
 </resources>

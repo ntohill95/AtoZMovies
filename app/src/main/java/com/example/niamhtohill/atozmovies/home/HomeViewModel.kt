@@ -30,7 +30,9 @@ class HomeViewModel(private val application: Application) : ViewModel() {
     private val cinemaPostcodeService by lazy {
         CinemaPostcodeService.create()
     }
-    var listOfLocalCinemas = MutableLiveData<List<Models.Cinema>>()
+    var listOfLocalCinemas = MutableLiveData<List<Models.CineListCinema>>()
+
+    var selectedCinema = MutableLiveData<String>()
 
     fun onPostcodeSearch(postcode: String) {
         disposable = cinemaPostcodeService
@@ -41,6 +43,10 @@ class HomeViewModel(private val application: Application) : ViewModel() {
                         { result -> listOfLocalCinemas.postValue(result.cinemas) },
                         { error -> println("*******error = " + error) }
                 )
+    }
+
+    fun updateSelectedCinema(cinemaName:String){
+        selectedCinema.postValue(cinemaName)
     }
 }
 

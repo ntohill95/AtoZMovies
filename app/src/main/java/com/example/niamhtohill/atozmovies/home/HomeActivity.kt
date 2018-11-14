@@ -29,7 +29,6 @@ class HomeActivity : AppCompatActivity(), LifecycleOwner, TabBarClickable {
         super.onCreate(savedInstanceState)
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         setContentView(R.layout.activity_home)
-
         supportFragmentManager
                 .beginTransaction()
                 .add(R.id.title_bar_placeholder, titleBarFragment)

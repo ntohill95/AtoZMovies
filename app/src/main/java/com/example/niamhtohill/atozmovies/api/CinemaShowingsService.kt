@@ -7,10 +7,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface CinemaPostcodeService {
+interface CinemaShowingsService {
 
-    @GET(POSTCODE_CINELIST)
-    fun fetchCinemasPostcode(@Path("postcode") postcode: String): Single<Models.CineListResult>
+    @GET(CINEMA_SHOWINGS_MOVIEAPI)
+    fun fetchCinemaShowings(@Path("venue_id") venueId: String): Single<List<Models.MoviesApiShowings>>
 
     companion object {
         fun create(): CinemaPostcodeService {
@@ -20,7 +20,7 @@ interface CinemaPostcodeService {
                             RxJava2CallAdapterFactory.create())
                     .addConverterFactory(
                             GsonConverterFactory.create())
-                    .baseUrl("http://www.cinelist.co.uk/")
+                    .baseUrl("http://api.cinelist.co.uk/")
                     .build()
             return retrofit.create(CinemaPostcodeService::class.java)
         }

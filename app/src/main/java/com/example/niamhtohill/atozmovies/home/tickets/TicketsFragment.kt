@@ -21,6 +21,7 @@ import com.example.niamhtohill.atozmovies.databinding.FragmentTicketsBinding
 import com.example.niamhtohill.atozmovies.home.HomeViewModel
 import com.example.niamhtohill.atozmovies.home.MyViewModelFactory
 
+
 class TicketsFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
@@ -31,7 +32,7 @@ class TicketsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        viewModel = ViewModelProviders.of(this, MyViewModelFactory(requireActivity().application)).get(HomeViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity!!, MyViewModelFactory(requireActivity().application)).get(HomeViewModel::class.java)
         val binding: FragmentTicketsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_tickets, container, false)
         binding.setVariable(BR.viewModel, viewModel)
         val rootView = binding.root
@@ -46,11 +47,19 @@ class TicketsFragment : Fragment() {
         }
         viewModel.listOfLocalCinemas.observe(this, Observer {
             noCinemasTextView.visibility = View.INVISIBLE
-            listView.adapter = TicketsAdapter(context!!, viewModel.listOfLocalCinemas.value!!)
-            if (viewModel.listOfLocalCinemas.value!!.size == 0) {
+            val ticketsAdapter = TicketsAdapter(context!!, viewModel.listOfLocalCinemas.value!!)
+            listView.adapter = ticketsAdapter
+            ticketsAdapter.setListener(object : TicketsAdapter.AdapterListener{
+                override fun cinemaSelected(name: String) {
+                    viewModel.updateSelectedCinema(name)
+                }
+            })
+            if (viewModel.listOfLocalCinemas.value!!.isEmpty()) {
                 noCinemasTextView.visibility = View.VISIBLE
             }
         })
+
+
         return rootView
     }
 
