@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.example.niamhtohill.atozmovies.BR
 import com.example.niamhtohill.atozmovies.R
@@ -28,6 +29,7 @@ class TicketsFragment : Fragment() {
     private lateinit var submitPostcodeButton: Button
     private lateinit var listView: RecyclerView
     private lateinit var noCinemasTextView: TextView
+    private lateinit var progressSpinner: ProgressBar
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -40,15 +42,19 @@ class TicketsFragment : Fragment() {
         postcodeEditText = rootView.findViewById(R.id.search_cinemas_near)
         submitPostcodeButton = rootView.findViewById(R.id.submit_postcode)
         noCinemasTextView = rootView.findViewById(R.id.no_cinemas_found_textview)
+        progressSpinner = rootView.findViewById(R.id.loading_spinner_tickets)
 
         submitPostcodeButton.setOnClickListener {
             view!!.hideKeyboard()
             viewModel.onPostcodeSearch(postcodeEditText.text.toString())
+            viewModel.searchedPostcode.postValue(postcodeEditText.text.toString())
+            progressSpinner.visibility = View.VISIBLE
         }
         viewModel.listOfLocalCinemas.observe(this, Observer {
             noCinemasTextView.visibility = View.INVISIBLE
-            val ticketsAdapter = TicketsAdapter(context!!, viewModel.listOfLocalCinemas.value!!)
+            val ticketsAdapter = TicketsAdapter(context!!, viewModel.listOfLocalCinemas.value!!, viewModel)
             listView.adapter = ticketsAdapter
+            progressSpinner.visibility = View.INVISIBLE
             ticketsAdapter.setListener(object : TicketsAdapter.AdapterListener {
                 override fun cinemaSelected(name: String) {
                     viewModel.updateSelectedCinema(name)
@@ -56,6 +62,7 @@ class TicketsFragment : Fragment() {
             })
             if (viewModel.listOfLocalCinemas.value!!.isEmpty()) {
                 noCinemasTextView.visibility = View.VISIBLE
+                progressSpinner.visibility = View.INVISIBLE
             }
         })
 

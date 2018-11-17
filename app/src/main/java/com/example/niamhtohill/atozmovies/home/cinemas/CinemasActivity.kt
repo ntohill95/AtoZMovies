@@ -2,6 +2,7 @@ package com.example.niamhtohill.atozmovies.home.cinemas
 
 import android.app.Application
 import android.arch.lifecycle.LifecycleOwner
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
@@ -23,11 +24,16 @@ class CinemasActivity : AppCompatActivity(), LifecycleOwner {
         val bundle = intent.extras!!
         val cinemaNameBundle = bundle["cinemaName"] as String
         val cinemaId = bundle["cinemaId"] as String
+        val postcode = bundle["postcodeSearched"] as String
 
         viewModel = ViewModelProviders.of(this, MyCinemaViewModelFactory(this.application)).get(CinemasViewModel::class.java)
         viewModel.selectedCinemaName.postValue(cinemaNameBundle)
         viewModel.selectedCinemaId.postValue(cinemaId)
         viewModel.fetchCinemaShowings(cinemaId)
+        viewModel.fetchCinemasMoviesAPI(postcode)
+        viewModel.listOfMoviesAPiCinemas.observe(this, Observer {
+            viewModel.fetchCinema()
+        })
 
         supportFragmentManager
                 .beginTransaction()

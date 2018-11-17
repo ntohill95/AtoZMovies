@@ -12,6 +12,9 @@ interface CinemaShowingsService {
     @GET(CINEMA_SHOWINGS_MOVIEAPI)
     fun fetchCinemaShowings(@Path("venue_id") venueId: String): Single<List<Models.MoviesApiShowings>>
 
+    @GET(CINEMAS_MOVIEAPI)
+    fun fetchMoviesApiCinemasPostcode(@Path("postcode") postcode:String): Single<List<Models.MoviesApiCinema>>
+
     companion object {
         fun create(): CinemaShowingsService {
             val retrofit = Retrofit.Builder()

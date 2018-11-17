@@ -34,6 +34,9 @@ class HomeViewModel(private val application: Application) : ViewModel() {
 
     var selectedCinema = MutableLiveData<String>()
 
+    var searchedPostcode = MutableLiveData<String>()
+
+
     fun onPostcodeSearch(postcode: String) {
         disposable = cinemaPostcodeService
                 .fetchCinemasPostcode(postcode)

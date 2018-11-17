@@ -13,8 +13,10 @@ class CinemasViewModel(private var application: Application) : ViewModel() {
 
     var selectedCinemaName = MutableLiveData<String>()
     var selectedCinemaId = MutableLiveData<String>()
+    var selectedCinema =  MutableLiveData<Models.MoviesApiCinema>()
     private var disposable: Disposable? = null
 
+    var listOfMoviesAPiCinemas = MutableLiveData<List<Models.MoviesApiCinema>>()
     var listOfShowings = MutableLiveData<List<Models.MoviesApiShowings>>()
     var showingsFetched = MutableLiveData<Boolean>().apply { postValue(false) }
 
@@ -33,7 +35,28 @@ class CinemasViewModel(private var application: Application) : ViewModel() {
                             listOfShowings.postValue(result)
                             showingsFetched.postValue(true)
                         },
-                        { error -> println("*******error = " + error) }
+                        { error -> println(error) }
                 )
+    }
+    fun fetchCinemasMoviesAPI(postcode:String){
+        disposable = cinemaShowingService
+                .fetchMoviesApiCinemasPostcode(postcode)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { result ->
+                            listOfMoviesAPiCinemas.postValue(result)
+                        },
+                        { error -> println(error) }
+                )
+
+    }
+    fun fetchCinema(){
+        for (cinema in listOfMoviesAPiCinemas.value!!){
+            if(cinema.venue_id == selectedCinemaId.value){
+                selectedCinema.postValue(cinema)
+                println("******** SELECTED CINEMA" + cinema)
+            }
+        }
     }
 }
