@@ -46,8 +46,8 @@ class TicketsFragment : Fragment() {
 
         submitPostcodeButton.setOnClickListener {
             view!!.hideKeyboard()
-            viewModel.onPostcodeSearch(postcodeEditText.text.toString())
-            viewModel.searchedPostcode.postValue(postcodeEditText.text.toString())
+            viewModel.onPostcodeSearch(postcodeEditText.text.toString().replace(" ", ""))
+            viewModel.searchedPostcode.postValue(postcodeEditText.text.toString().replace(" ", ""))
             progressSpinner.visibility = View.VISIBLE
         }
         viewModel.listOfLocalCinemas.observe(this, Observer {
