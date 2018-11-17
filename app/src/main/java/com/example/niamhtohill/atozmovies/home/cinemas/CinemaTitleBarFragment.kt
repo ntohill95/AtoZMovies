@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.niamhtohill.atozmovies.BR
 import com.example.niamhtohill.atozmovies.R
@@ -28,6 +29,7 @@ class CinemaTitleBarFragment : Fragment() {
     private lateinit var thursdayButton: Button
     private lateinit var fridayButton: Button
     private lateinit var saturdayButton: Button
+    private lateinit var weekdayLayout: LinearLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -38,6 +40,7 @@ class CinemaTitleBarFragment : Fragment() {
         val rootView = binding.root
         cinemaName = rootView.findViewById(R.id.cinema_title_text_view)
         cinemaAddress = rootView.findViewById(R.id.cinema_address_text_view)
+        weekdayLayout = rootView.findViewById(R.id.weekday_buttons_layout)
         sundayButton = rootView.findViewById(R.id.sunday_tab_button)
         mondayButton = rootView.findViewById(R.id.monday_tab_button)
         tuesdayButton = rootView.findViewById(R.id.tuesday_tab_button)
@@ -56,8 +59,69 @@ class CinemaTitleBarFragment : Fragment() {
 
         viewModel.selectedCinema.observe(this, Observer {
             cinemaAddress.text = viewModel.selectedCinema.value!!.address
-
         })
+
+        sundayButton.setOnClickListener {
+            viewModel.fetchCinemaShowingsForDay("sunday")
+            for (i in 0..6) {
+                val view = weekdayLayout.getChildAt(i)
+                view.background = resources.getDrawable(R.color.colorPrimaryLight)
+            }
+            sundayButton.background = resources.getDrawable(R.color.colorTextIcons)
+        }
+        mondayButton.setOnClickListener {
+            viewModel.fetchCinemaShowingsForDay("monday")
+            for (i in 0..6) {
+                val view = weekdayLayout.getChildAt(i)
+                view.background = resources.getDrawable(R.color.colorPrimaryLight)
+            }
+            mondayButton.background = resources.getDrawable(R.color.colorTextIcons)
+        }
+        tuesdayButton.setOnClickListener {
+            viewModel.fetchCinemaShowingsForDay("tuesday")
+            viewModel.fetchCinemaShowingsForDay("monday")
+            for (i in 0..6) {
+                val view = weekdayLayout.getChildAt(i)
+                view.background = resources.getDrawable(R.color.colorPrimaryLight)
+            }
+            tuesdayButton.background = resources.getDrawable(R.color.colorTextIcons)
+        }
+        wednesdayButton.setOnClickListener {
+            viewModel.fetchCinemaShowingsForDay("wednesday")
+            viewModel.fetchCinemaShowingsForDay("monday")
+            for (i in 0..6) {
+                val view = weekdayLayout.getChildAt(i)
+                view.background = resources.getDrawable(R.color.colorPrimaryLight)
+            }
+            wednesdayButton.background = resources.getDrawable(R.color.colorTextIcons)
+        }
+        thursdayButton.setOnClickListener {
+            viewModel.fetchCinemaShowingsForDay("thursday")
+            viewModel.fetchCinemaShowingsForDay("monday")
+            for (i in 0..6) {
+                val view = weekdayLayout.getChildAt(i)
+                view.background = resources.getDrawable(R.color.colorPrimaryLight)
+            }
+            thursdayButton.background = resources.getDrawable(R.color.colorTextIcons)
+        }
+        fridayButton.setOnClickListener {
+            viewModel.fetchCinemaShowingsForDay("friday")
+            viewModel.fetchCinemaShowingsForDay("monday")
+            for (i in 0..6) {
+                val view = weekdayLayout.getChildAt(i)
+                view.background = resources.getDrawable(R.color.colorPrimaryLight)
+            }
+            fridayButton.background = resources.getDrawable(R.color.colorTextIcons)
+        }
+        saturdayButton.setOnClickListener {
+            viewModel.fetchCinemaShowingsForDay("saturday")
+            viewModel.fetchCinemaShowingsForDay("monday")
+            for (i in 0..6) {
+                val view = weekdayLayout.getChildAt(i)
+                view.background = resources.getDrawable(R.color.colorPrimaryLight)
+            }
+            saturdayButton.background = resources.getDrawable(R.color.colorTextIcons)
+        }
         return rootView
     }
 }

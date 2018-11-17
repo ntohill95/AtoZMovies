@@ -13,7 +13,10 @@ interface CinemaShowingsService {
     fun fetchCinemaShowings(@Path("venue_id") venueId: String): Single<List<Models.MoviesApiShowings>>
 
     @GET(CINEMAS_MOVIEAPI)
-    fun fetchMoviesApiCinemasPostcode(@Path("postcode") postcode:String): Single<List<Models.MoviesApiCinema>>
+    fun fetchMoviesApiCinemasPostcode(@Path("postcode") postcode: String): Single<List<Models.MoviesApiCinema>>
+
+    @GET(CINEMA_SHOWINGS_DAY)
+    fun fetchShowingsForDay(@Path("venue_id") venueId: String, @Path("day") day: String): Single<List<Models.MoviesApiShowings>>
 
     companion object {
         fun create(): CinemaShowingsService {

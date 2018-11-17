@@ -30,6 +30,7 @@ class CinemasActivity : AppCompatActivity(), LifecycleOwner {
         viewModel.selectedCinemaName.postValue(cinemaNameBundle)
         viewModel.selectedCinemaId.postValue(cinemaId)
         viewModel.fetchCinemaShowings(cinemaId)
+        viewModel.postcode = postcode
         viewModel.fetchCinemasMoviesAPI(postcode)
         viewModel.listOfMoviesAPiCinemas.observe(this, Observer {
             viewModel.fetchCinema()

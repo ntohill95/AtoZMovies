@@ -13,7 +13,8 @@ class CinemasViewModel(private var application: Application) : ViewModel() {
 
     var selectedCinemaName = MutableLiveData<String>()
     var selectedCinemaId = MutableLiveData<String>()
-    var selectedCinema =  MutableLiveData<Models.MoviesApiCinema>()
+    var selectedCinema = MutableLiveData<Models.MoviesApiCinema>()
+    var postcode: String = ""
     private var disposable: Disposable? = null
 
     var listOfMoviesAPiCinemas = MutableLiveData<List<Models.MoviesApiCinema>>()
@@ -38,7 +39,7 @@ class CinemasViewModel(private var application: Application) : ViewModel() {
                         { error -> println(error) }
                 )
     }
-    fun fetchCinemasMoviesAPI(postcode:String){
+    fun fetchCinemasMoviesAPI(postcode: String) {
         disposable = cinemaShowingService
                 .fetchMoviesApiCinemasPostcode(postcode)
                 .subscribeOn(Schedulers.io())
@@ -49,14 +50,28 @@ class CinemasViewModel(private var application: Application) : ViewModel() {
                         },
                         { error -> println(error) }
                 )
-
     }
-    fun fetchCinema(){
-        for (cinema in listOfMoviesAPiCinemas.value!!){
-            if(cinema.venue_id == selectedCinemaId.value){
+    fun fetchCinema() {
+        for (cinema in listOfMoviesAPiCinemas.value!!) {
+            if (cinema.venue_id == selectedCinemaId.value) {
                 selectedCinema.postValue(cinema)
                 println("******** SELECTED CINEMA" + cinema)
             }
         }
+    }
+
+    fun fetchCinemaShowingsForDay(day: String) {
+        disposable = cinemaShowingService
+                .fetchShowingsForDay(selectedCinemaId.value!!, day)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { showingsFetched.postValue(false) }
+                .subscribe(
+                        { result ->
+                            listOfShowings.postValue(result)
+                            showingsFetched.postValue(true)
+                        },
+                        { error -> println(error) }
+                )
     }
 }

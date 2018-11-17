@@ -10,7 +10,7 @@ import com.example.niamhtohill.atozmovies.api.Models
 import com.example.niamhtohill.atozmovies.home.HomeViewModel
 import com.example.niamhtohill.atozmovies.home.cinemas.CinemasActivity
 
-class TicketsAdapter(private var context: Context, private val cinemaList: List<Models.CineListCinema>, private val viewModel :HomeViewModel) : RecyclerView.Adapter<TicketsViewHolder>() {
+class TicketsAdapter(private var context: Context, private val cinemaList: List<Models.CineListCinema>, private val viewModel: HomeViewModel) : RecyclerView.Adapter<TicketsViewHolder>() {
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): TicketsViewHolder {
         return TicketsViewHolder(LayoutInflater.from(context).inflate(R.layout.cell_tickets, p0, false))
