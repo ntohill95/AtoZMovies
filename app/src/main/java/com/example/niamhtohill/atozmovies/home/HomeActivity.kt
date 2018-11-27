@@ -8,7 +8,7 @@ import com.example.niamhtohill.atozmovies.home.favourites.FavouritesFragment
 import com.example.niamhtohill.atozmovies.home.recommendation.RecommendationFragment
 import com.example.niamhtohill.atozmovies.home.search.SearchFragment
 import com.example.niamhtohill.atozmovies.home.tickets.TicketsFragment
-import com.example.niamhtohill.atozmovies.home.topMovies.TopMoviesFragment
+import com.example.niamhtohill.atozmovies.home.topMovies.PopularMoviesFragment
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 
@@ -20,7 +20,7 @@ class HomeActivity : AppCompatActivity(), LifecycleOwner, TabBarClickable {
     private var titleBarFragment = TitleBarFragment()
     private var tabBarFragment = TabBarFragment()
     private var favouritesFragment = FavouritesFragment()
-    private var topMoviesFragment = TopMoviesFragment()
+    private var topMoviesFragment = PopularMoviesFragment()
     private var ticketsFragment = TicketsFragment()
     private var recommendationFragment = RecommendationFragment()
     private var searchFragment = SearchFragment()
@@ -67,7 +67,7 @@ class HomeActivity : AppCompatActivity(), LifecycleOwner, TabBarClickable {
                 .replace(R.id.central_content_placeholder, topMoviesFragment)
                 .commit()
         supportFragmentManager.executePendingTransactions()
-        titleBarFragment.titleBarTextView.text = resources.getString(R.string.top_movies)
+        titleBarFragment.titleBarTextView.text = resources.getString(R.string.popular)
     }
 
     override fun recommendationButtonClicked() {

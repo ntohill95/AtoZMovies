@@ -10,29 +10,34 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import com.example.niamhtohill.atozmovies.BR
 import com.example.niamhtohill.atozmovies.R
 import com.example.niamhtohill.atozmovies.api.API_KEY
-import com.example.niamhtohill.atozmovies.databinding.FragmentTopMoviesBinding
+import com.example.niamhtohill.atozmovies.databinding.FragmentPopularBinding
 import com.example.niamhtohill.atozmovies.home.HomeViewModel
 import com.example.niamhtohill.atozmovies.home.MyViewModelFactory
 
-class TopMoviesFragment : Fragment() {
+class PopularMoviesFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
-    private var fakeList = ArrayList<String>()
+    private lateinit var progressSpinner: ProgressBar
+    private lateinit var listView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         viewModel = ViewModelProviders.of(this, MyViewModelFactory(requireActivity().application)).get(HomeViewModel::class.java)
-        val binding: FragmentTopMoviesBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_top_movies, container, false)
+        val binding: FragmentPopularBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_popular, container, false)
         binding.setVariable(BR.viewModel, viewModel)
         val rootView = binding.root
-        val listView: RecyclerView = rootView.findViewById(R.id.top_movies_list_view)
+        listView = rootView.findViewById(R.id.top_movies_list_view)
+        progressSpinner = rootView.findViewById(R.id.loading_spinner_popular)
+        progressSpinner.visibility = View.VISIBLE
         listView.layoutManager = LinearLayoutManager(this.context)
         viewModel.onPopularMoviesSearch(API_KEY)
         viewModel.listOPopularMovies.observe(this, Observer {
-            listView.adapter = TopMoviesAdapter(context!!, viewModel.listOPopularMovies.value!!)
+            listView.adapter = PopularMoviesAdapter(context!!, viewModel.listOPopularMovies.value!!)
+            progressSpinner.visibility = View.INVISIBLE
         })
 
         return rootView
