@@ -8,6 +8,7 @@ import android.content.Intent
 import android.view.View
 import com.example.niamhtohill.atozmovies.api.CinemaPostcodeService
 import com.example.niamhtohill.atozmovies.api.Models
+import com.example.niamhtohill.atozmovies.api.MovieDatabaseService
 import com.example.niamhtohill.atozmovies.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,7 +22,6 @@ class HomeViewModel(private val application: Application) : ViewModel() {
     }
 
     private fun logoutOfFirebase() {
-        println("*********LOGOUT CLICKED")
         FirebaseAuth.getInstance().signOut()
         application.startActivity(Intent(application, LoginActivity::class.java))
     }
@@ -30,11 +30,16 @@ class HomeViewModel(private val application: Application) : ViewModel() {
     private val cinemaPostcodeService by lazy {
         CinemaPostcodeService.create()
     }
+    private val moviesDatabaseService by lazy {
+        MovieDatabaseService.create()
+    }
     var listOfLocalCinemas = MutableLiveData<List<Models.CineListCinema>>()
 
     var selectedCinema = MutableLiveData<String>()
 
     var searchedPostcode = MutableLiveData<String>()
+
+    var listOPopularMovies = MutableLiveData<List<Models.MoviesDBMovie>>()
 
     fun onPostcodeSearch(postcode: String) {
         disposable = cinemaPostcodeService
@@ -43,12 +48,23 @@ class HomeViewModel(private val application: Application) : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { result -> listOfLocalCinemas.postValue(result.cinemas) },
-                        { error -> println("*******error = " + error) }
+                        { error -> println(error) }
                 )
     }
 
     fun updateSelectedCinema(cinemaName: String) {
         selectedCinema.postValue(cinemaName)
+    }
+
+    fun onPopularMoviesSearch(apiKey: String) {
+        disposable = moviesDatabaseService
+                .fetchPopularMovies(apiKey)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { result -> listOPopularMovies.postValue(result.results) },
+                        { error -> println(error) }
+                )
     }
 }
 

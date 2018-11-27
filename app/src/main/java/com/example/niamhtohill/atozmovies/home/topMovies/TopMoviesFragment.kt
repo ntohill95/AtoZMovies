@@ -1,5 +1,6 @@
 package com.example.niamhtohill.atozmovies.home.topMovies
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.niamhtohill.atozmovies.BR
 import com.example.niamhtohill.atozmovies.R
+import com.example.niamhtohill.atozmovies.api.API_KEY
 import com.example.niamhtohill.atozmovies.databinding.FragmentTopMoviesBinding
 import com.example.niamhtohill.atozmovies.home.HomeViewModel
 import com.example.niamhtohill.atozmovies.home.MyViewModelFactory
@@ -26,25 +28,13 @@ class TopMoviesFragment : Fragment() {
         val binding: FragmentTopMoviesBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_top_movies, container, false)
         binding.setVariable(BR.viewModel, viewModel)
         val rootView = binding.root
-
         val listView: RecyclerView = rootView.findViewById(R.id.top_movies_list_view)
         listView.layoutManager = LinearLayoutManager(this.context)
-        listView.adapter = TopMoviesAdapter(context!!, generatedFakeData())
-        return rootView
-    }
+        viewModel.onPopularMoviesSearch(API_KEY)
+        viewModel.listOPopularMovies.observe(this, Observer {
+            listView.adapter = TopMoviesAdapter(context!!, viewModel.listOPopularMovies.value!!)
+        })
 
-    private fun generatedFakeData(): ArrayList<String> {
-        fakeList.clear()
-        fakeList.add("Ghostbusters")
-        fakeList.add("Ghostbusters")
-        fakeList.add("Ghostbusters")
-        fakeList.add("Ghostbusters")
-        fakeList.add("Ghostbusters")
-        fakeList.add("Ghostbusters")
-        fakeList.add("Ghostbusters")
-        fakeList.add("Ghostbusters")
-        fakeList.add("Ghostbusters")
-        fakeList.add("Ghostbusters")
-        return fakeList
+        return rootView
     }
 }

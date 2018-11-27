@@ -22,17 +22,22 @@ class LoginViewModel(private val application: Application) : ViewModel() {
     val showProgressBar = MutableLiveData<Boolean>().apply { postValue(false) }
     val accountCreated = MutableLiveData<Boolean>().apply { postValue(false) }
 
+    var progressVisibility = View.INVISIBLE
+
     fun onLoginClicked(view: View) {
         view.hideKeyboard()
+        showProgressBar.postValue(true)
+        progressVisibility = View.VISIBLE
         if (email.value != "" && password.value != "") {
             val email = email.value!!
             val password = password.value!!
 
             credentials = EmailAuthProvider.getCredential(email, password)
-            showProgressBar.postValue(true)
             loginToFirebase(email, password)
         } else {
             Toast.makeText(application, "Please enter valid credentials", Toast.LENGTH_SHORT).show()
+            progressVisibility = View.INVISIBLE
+            showProgressBar.postValue(false)
         }
     }
 
@@ -46,20 +51,27 @@ class LoginViewModel(private val application: Application) : ViewModel() {
             val email = email.value!!
             val password = password.value!!
             createFirebaseAccount(email, password)
+            showProgressBar.postValue(true)
+            progressVisibility = View.VISIBLE
         } else {
             Toast.makeText(application, "Please enter valid credentials", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun loginToFirebase(email: String, password: String) {
+        showProgressBar.postValue(true)
+        progressVisibility = View.VISIBLE
+
         mFirebaseAuth!!.signInWithEmailAndPassword(email, password).addOnCompleteListener() { task ->
             if (task.isSuccessful) {
                 val currentUser = mFirebaseAuth!!.currentUser
                 // TODO store current user in database
                 showProgressBar.postValue(false)
+                progressVisibility = View.INVISIBLE
                 application.startActivity(Intent(application, HomeActivity::class.java))
             } else {
                 showProgressBar.postValue(false)
+                progressVisibility = View.INVISIBLE
                 Toast.makeText(application, "Unsuccessful login", Toast.LENGTH_SHORT).show()
             }
         }
