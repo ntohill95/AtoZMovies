@@ -1,5 +1,7 @@
 package com.example.niamhtohill.atozmovies.api
 
+import java.io.Serializable
+
 object Models {
 
     data class CineListResult(val postcode: String, val cinemas: List<CineListCinema>)
@@ -24,5 +26,5 @@ object Models {
         val adult: Boolean,
         val overview: String,
         val release_date: String
-    )
+    ) : Serializable
 }

@@ -36,7 +36,7 @@ class PopularMoviesFragment : Fragment() {
         listView.layoutManager = LinearLayoutManager(this.context)
         viewModel.onPopularMoviesSearch(API_KEY)
         viewModel.listOPopularMovies.observe(this, Observer {
-            listView.adapter = PopularMoviesAdapter(context!!, viewModel.listOPopularMovies.value!!)
+            listView.adapter = PopularMoviesAdapter(context!!, viewModel.listOPopularMovies.value!!, viewModel)
             progressSpinner.visibility = View.INVISIBLE
         })
 
