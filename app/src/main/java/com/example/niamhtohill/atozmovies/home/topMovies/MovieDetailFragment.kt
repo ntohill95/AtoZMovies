@@ -16,6 +16,7 @@ import com.example.niamhtohill.atozmovies.api.Models
 import com.example.niamhtohill.atozmovies.databinding.FragmentMovieDetailBinding
 import com.example.niamhtohill.atozmovies.home.HomeViewModel
 import com.example.niamhtohill.atozmovies.home.MyViewModelFactory
+import com.squareup.picasso.Picasso
 
 class MovieDetailFragment : Fragment() {
 
@@ -38,6 +39,9 @@ class MovieDetailFragment : Fragment() {
         movieTitle = rootView.findViewById(R.id.movie_title_text_view)
         movieTitle.text = movieSelected.title
         moviePoster = rootView.findViewById(R.id.movie_poster_image_view)
+        //TODO 2 ensure this is correctly converted to Kotlin code
+        //.placeholder(R.drawable.TODO)
+        Picasso.get().load(  "http://image.tmdb.org/t/p/w185" + movieSelected.poster_path).into(moviePoster)
         movieGenre = rootView.findViewById(R.id.movie_genre_text_view)
         movieGenre.text = movieSelected.genre_ids.toString()
         movieReleaseDate = rootView.findViewById(R.id.movie_date_text_view)
