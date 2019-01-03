@@ -1,9 +1,7 @@
 package com.example.niamhtohill.atozmovies.login
 
 import android.app.Application
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.*
 import android.content.Context
 import android.content.Intent
 import android.view.View
@@ -12,6 +10,7 @@ import android.widget.Toast
 import com.example.niamhtohill.atozmovies.home.HomeActivity
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.EmailAuthProvider
+import kotlinx.android.synthetic.main.fragment_login.view.*
 
 lateinit var credentials: AuthCredential
 
@@ -19,25 +18,19 @@ class LoginViewModel(private val application: Application) : ViewModel() {
 
     val email = MutableLiveData<String>().apply { postValue("niamhtohill95@yahoo.co.uk") }
     val password = MutableLiveData<String>().apply { postValue("testing1!") }
-    val showProgressBar = MutableLiveData<Boolean>().apply { postValue(false) }
     val accountCreated = MutableLiveData<Boolean>().apply { postValue(false) }
-
-    var progressVisibility = View.INVISIBLE
+    val loading = MutableLiveData<Boolean>().apply { postValue(false) }
 
     fun onLoginClicked(view: View) {
         view.hideKeyboard()
-        showProgressBar.postValue(true)
-        progressVisibility = View.VISIBLE
+        loading.postValue(true)
         if (email.value != "" && password.value != "") {
             val email = email.value!!
             val password = password.value!!
-
             credentials = EmailAuthProvider.getCredential(email, password)
             loginToFirebase(email, password)
         } else {
             Toast.makeText(application, "Please enter valid credentials", Toast.LENGTH_SHORT).show()
-            progressVisibility = View.INVISIBLE
-            showProgressBar.postValue(false)
         }
     }
 
@@ -51,30 +44,19 @@ class LoginViewModel(private val application: Application) : ViewModel() {
             val email = email.value!!
             val password = password.value!!
             createFirebaseAccount(email, password)
-            showProgressBar.postValue(true)
-            progressVisibility = View.VISIBLE
         } else {
             Toast.makeText(application, "Please enter valid credentials", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun loginToFirebase(email: String, password: String) {
-        showProgressBar.postValue(true)
-        progressVisibility = View.VISIBLE
-
-        println("*************** loggin in to firebase")
         mFirebaseAuth!!.signInWithEmailAndPassword(email, password).addOnCompleteListener() { task ->
             if (task.isSuccessful) {
-                println("*************** logging in successful")
                 val currentUser = mFirebaseAuth!!.currentUser
                 // TODO store current user in database
-                showProgressBar.postValue(false)
-                progressVisibility = View.INVISIBLE
                 application.startActivity(Intent(application, HomeActivity::class.java))
+                loading.postValue(false)
             } else {
-                println("*************** logging in nope")
-                showProgressBar.postValue(false)
-                progressVisibility = View.INVISIBLE
                 Toast.makeText(application, "Unsuccessful login", Toast.LENGTH_SHORT).show()
             }
         }
