@@ -26,7 +26,6 @@ class LoginFragment : Fragment(), LifecycleOwner {
         val binding: FragmentLoginBinding = DataBindingUtil.setContentView(requireActivity(), R.layout.fragment_login)
         binding.viewModel = viewModel
         binding.setVariable(BR.viewModel, viewModel)
-        // rootView = binding.root
         progressSpinner = rootView.findViewById(R.id.login_progress_bar)
         viewModel.accountCreated.observe(this, Observer { test ->
             if (viewModel.accountCreated.value == true) {
@@ -36,10 +35,8 @@ class LoginFragment : Fragment(), LifecycleOwner {
         viewModel.showProgressBar.observe(this, Observer {
             if (viewModel.showProgressBar.value == true) {
                 progressSpinner.visibility = View.VISIBLE
-                println("***** login spinner true")
             } else {
                 progressSpinner.visibility = View.INVISIBLE
-                println("***** login spinner false")
             }
         })
         return rootView

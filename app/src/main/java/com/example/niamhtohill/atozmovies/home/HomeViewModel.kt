@@ -23,7 +23,7 @@ class HomeViewModel(private val application: Application) : ViewModel() {
 
     private fun logoutOfFirebase() {
         FirebaseAuth.getInstance().signOut()
-        application.startActivity(Intent(application, LoginActivity::class.java))
+        application.startActivity(Intent(application, LoginActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
     }
 
     private var disposable: Disposable? = null

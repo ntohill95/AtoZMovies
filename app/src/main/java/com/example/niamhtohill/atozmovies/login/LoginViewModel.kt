@@ -62,14 +62,17 @@ class LoginViewModel(private val application: Application) : ViewModel() {
         showProgressBar.postValue(true)
         progressVisibility = View.VISIBLE
 
+        println("*************** loggin in to firebase")
         mFirebaseAuth!!.signInWithEmailAndPassword(email, password).addOnCompleteListener() { task ->
             if (task.isSuccessful) {
+                println("*************** logging in successful")
                 val currentUser = mFirebaseAuth!!.currentUser
                 // TODO store current user in database
                 showProgressBar.postValue(false)
                 progressVisibility = View.INVISIBLE
                 application.startActivity(Intent(application, HomeActivity::class.java))
             } else {
+                println("*************** logging in nope")
                 showProgressBar.postValue(false)
                 progressVisibility = View.INVISIBLE
                 Toast.makeText(application, "Unsuccessful login", Toast.LENGTH_SHORT).show()
