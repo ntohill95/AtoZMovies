@@ -17,7 +17,7 @@ import com.example.niamhtohill.atozmovies.databinding.FragmentMovieDetailBinding
 import com.example.niamhtohill.atozmovies.home.HomeViewModel
 import com.example.niamhtohill.atozmovies.home.MyViewModelFactory
 import com.squareup.picasso.Picasso
-git
+
 class MovieDetailFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel

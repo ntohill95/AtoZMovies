@@ -18,7 +18,6 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         mFirebaseAuth = FirebaseAuth.getInstance()
-        // KOIN could be a good use here
 
         supportFragmentManager.beginTransaction()
                 .add(R.id.fragment_login_placeholder, LoginFragment())
