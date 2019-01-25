@@ -1,6 +1,6 @@
 package com.example.niamhtohill.atozmovies.home.tickets
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import kotlinx.android.synthetic.main.cell_tickets.view.*
 

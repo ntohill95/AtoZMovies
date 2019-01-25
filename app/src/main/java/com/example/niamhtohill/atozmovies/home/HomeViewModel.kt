@@ -1,9 +1,9 @@
 package com.example.niamhtohill.atozmovies.home
 
 import android.app.Application
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import android.content.Intent
 import android.view.View
 import com.example.niamhtohill.atozmovies.api.CinemaPostcodeService

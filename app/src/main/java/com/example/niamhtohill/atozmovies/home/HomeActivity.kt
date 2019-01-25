@@ -1,8 +1,8 @@
 package com.example.niamhtohill.atozmovies.home
 
-import android.arch.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleOwner
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.example.niamhtohill.atozmovies.R
 import com.example.niamhtohill.atozmovies.home.favourites.FavouritesFragment
 import com.example.niamhtohill.atozmovies.home.recommendation.RecommendationFragment

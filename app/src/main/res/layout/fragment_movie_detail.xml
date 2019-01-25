@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -14,7 +15,7 @@
         android:layout_height="match_parent"
         android:background="@color/colorPrimary">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -76,6 +77,45 @@
                 </LinearLayout>
             </LinearLayout>
 
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/add_to_favourite_list_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:src="@drawable/heart"
+                android:scaleType="center"
+                app:layout_constraintBottom_toTopOf="@+id/bottom_linear_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/top_linear_layout"
+                app:rippleColor="@color/colorPrimary" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/add_to_watch_list_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:src="@drawable/list"
+                android:scaleType="center"
+                app:layout_constraintBottom_toTopOf="@+id/bottom_linear_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/top_linear_layout"
+                app:rippleColor="@color/colorPrimary" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/add_to_list_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="@color/colorAccent"
+                android:src="@drawable/save"
+                app:layout_constraintBottom_toTopOf="@+id/bottom_linear_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/top_linear_layout"
+                app:rippleColor="@color/colorAccent_50" />
+
             <LinearLayout
                 android:id="@+id/bottom_linear_layout"
                 android:layout_width="match_parent"
@@ -93,7 +133,7 @@
                     android:textColor="@color/colorTextIcons"
                     android:textSize="20sp" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/actors_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
@@ -117,6 +157,6 @@
                     android:textSize="15sp" />
 
             </LinearLayout>
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

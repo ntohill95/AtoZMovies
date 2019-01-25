@@ -10,7 +10,7 @@
             type="com.example.niamhtohill.atozmovies.login.LoginViewModel" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_login_base_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -159,5 +159,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

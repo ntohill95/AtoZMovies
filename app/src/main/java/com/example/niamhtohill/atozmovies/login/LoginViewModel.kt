@@ -1,7 +1,7 @@
 package com.example.niamhtohill.atozmovies.login
 
 import android.app.Application
-import android.arch.lifecycle.*
+import androidx.lifecycle.*
 import android.content.Context
 import android.content.Intent
 import android.view.View

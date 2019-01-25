@@ -2,7 +2,7 @@ package com.example.niamhtohill.atozmovies.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.example.niamhtohill.atozmovies.R
 import com.example.niamhtohill.atozmovies.home.HomeActivity
 import com.google.firebase.analytics.FirebaseAnalytics

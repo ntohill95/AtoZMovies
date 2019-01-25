@@ -1,8 +1,8 @@
 package com.example.niamhtohill.atozmovies.home.cinemas
 
 import android.app.Application
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.niamhtohill.atozmovies.api.CinemaShowingsService
 import com.example.niamhtohill.atozmovies.api.Models
 import io.reactivex.android.schedulers.AndroidSchedulers
