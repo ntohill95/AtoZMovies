@@ -78,6 +78,9 @@ class HomeViewModel(private val application: Application) : ViewModel() {
     }
 
     fun genresOfMovieSelected(genreIds: List<Int>): ArrayList<String> {
+        if(genresOfMovie.isNotEmpty()){
+            genresOfMovie.removeAll(genresOfMovie)
+        }
         for (id in genreIds) {
             val genre = listOfGenres.value!!.stream().filter { genre -> genre.id == id }.findFirst().orElse(Models.MovieGenre(0, ""))
             genresOfMovie.add(genre.name)

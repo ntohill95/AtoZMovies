@@ -74,4 +74,5 @@ class MovieDetailFragment : Fragment() {
         saveToFavourites.animate().translationY(0f)
         saveToWatch.animate().translationY(0f)
     }
+
 }
