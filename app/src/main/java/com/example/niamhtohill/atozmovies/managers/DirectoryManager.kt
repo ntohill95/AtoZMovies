@@ -21,7 +21,7 @@ class DirectoryManager(val context: Context) {
         }
     }
 
-    fun createDirectoryForList(listName:String): String {
+    fun createDirectoryForList(listName: String): String {
         val verifiedUserDirectory = getUserDirectory()
         val projectPath = "$verifiedUserDirectory/$listName"
         val projectDirectory = File(projectPath)

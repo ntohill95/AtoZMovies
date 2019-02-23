@@ -12,6 +12,9 @@ interface MovieDatabaseService {
     @GET(MOVIES_POPULAR)
     fun fetchPopularMovies(@Query("api_key") api_key: String): Single<Models.MoviesDBPopular>
 
+    @GET(MOVIES_GENRES)
+    fun fetchGeneres(@Query("api_key") api_key: String): Single<Models.MoviesGenres>
+
     companion object {
         fun create(): MovieDatabaseService {
             val retrofit = Retrofit.Builder()

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import android.content.Intent
 import android.view.View
+import com.example.niamhtohill.atozmovies.api.API_KEY
 import com.example.niamhtohill.atozmovies.api.CinemaPostcodeService
 import com.example.niamhtohill.atozmovies.api.Models
 import com.example.niamhtohill.atozmovies.api.MovieDatabaseService
@@ -33,6 +34,10 @@ class HomeViewModel(private val application: Application) : ViewModel() {
     private val moviesDatabaseService by lazy {
         MovieDatabaseService.create()
     }
+
+    private val genresDatabaseService by lazy {
+        MovieDatabaseService.create()
+    }
     var listOfLocalCinemas = MutableLiveData<List<Models.CineListCinema>>()
 
     var selectedCinema = MutableLiveData<String>()
@@ -40,6 +45,12 @@ class HomeViewModel(private val application: Application) : ViewModel() {
     var searchedPostcode = MutableLiveData<String>()
 
     var listOPopularMovies = MutableLiveData<List<Models.MoviesDBMovie>>()
+    var listOfGenres = MutableLiveData<List<Models.MovieGenre>>()
+    var genresOfMovie = ArrayList<String>()
+
+    init {
+        fetchGenreNames(API_KEY)
+    }
 
     fun onPostcodeSearch(postcode: String) {
         disposable = cinemaPostcodeService
@@ -54,6 +65,24 @@ class HomeViewModel(private val application: Application) : ViewModel() {
 
     fun updateSelectedCinema(cinemaName: String) {
         selectedCinema.postValue(cinemaName)
+    }
+
+    fun fetchGenreNames(apiKey: String) {
+        disposable = genresDatabaseService
+                .fetchGeneres(apiKey)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { result -> listOfGenres.postValue(result.genres) },
+                        { error -> println(error) })
+    }
+
+    fun genresOfMovieSelected(genreIds: List<Int>): ArrayList<String> {
+        for (id in genreIds) {
+            val genre = listOfGenres.value!!.stream().filter { genre -> genre.id == id }.findFirst().orElse(Models.MovieGenre(0, ""))
+            genresOfMovie.add(genre.name)
+        }
+        return genresOfMovie
     }
 
     fun onPopularMoviesSearch(apiKey: String) {

@@ -2,7 +2,6 @@ package com.example.niamhtohill.atozmovies.home.topMovies
 
 import android.content.Context
 import android.os.Bundle
-import android.os.Parcelable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -35,5 +34,4 @@ class PopularMoviesAdapter(private var context: Context, private val topMovieLis
             activity.supportFragmentManager.beginTransaction().replace(R.id.central_content_placeholder, movieDetailFragment).commit()
         }
     }
-
 }

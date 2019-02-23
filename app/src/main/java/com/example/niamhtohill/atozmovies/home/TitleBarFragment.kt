@@ -1,32 +1,24 @@
 package com.example.niamhtohill.atozmovies.home
 
-import androidx.lifecycle.ViewModelProviders
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
-import com.example.niamhtohill.atozmovies.BR
+import androidx.fragment.app.Fragment
 import com.example.niamhtohill.atozmovies.R
-import com.example.niamhtohill.atozmovies.databinding.FragmentTitleBarBinding
 
 class TitleBarFragment : Fragment() {
 
-    private lateinit var viewModel: HomeViewModel
     lateinit var logoutButton: ImageButton
     lateinit var titleBarTextView: TextView
+    lateinit var parentBaseActivity: HomeActivity
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        viewModel = ViewModelProviders.of(this, MyViewModelFactory(requireActivity().application)).get(HomeViewModel::class.java)
-        val binding: FragmentTitleBarBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_title_bar, container, false)
-        binding.setVariable(BR.viewModel, viewModel)
-
-        val rootView = binding.root
-
+        parentBaseActivity = activity as HomeActivity
+        val rootView = inflater.inflate(R.layout.fragment_title_bar, container, false)
         logoutButton = rootView.findViewById(R.id.logout_button)
         titleBarTextView = rootView.findViewById(R.id.title_text_view)
         return rootView

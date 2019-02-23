@@ -1,8 +1,9 @@
 package com.example.niamhtohill.atozmovies.home
 
-import androidx.lifecycle.LifecycleOwner
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelProviders
 import com.example.niamhtohill.atozmovies.R
 import com.example.niamhtohill.atozmovies.home.favourites.FavouritesFragment
 import com.example.niamhtohill.atozmovies.home.recommendation.RecommendationFragment
@@ -17,6 +18,7 @@ var mFirebaseAnalytics: FirebaseAnalytics? = null
 class HomeActivity : AppCompatActivity(), LifecycleOwner, TabBarClickable {
 
     private var fbAuth = FirebaseAuth.getInstance()
+    lateinit var viewModel: HomeViewModel
     private var titleBarFragment = TitleBarFragment()
     private var tabBarFragment = TabBarFragment()
     private var favouritesFragment = FavouritesFragment()
@@ -26,8 +28,11 @@ class HomeActivity : AppCompatActivity(), LifecycleOwner, TabBarClickable {
     private var searchFragment = SearchFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        viewModel = ViewModelProviders.of(this, MyViewModelFactory(application)).get(HomeViewModel::class.java)
+
         setContentView(R.layout.activity_home)
         supportFragmentManager
                 .beginTransaction()

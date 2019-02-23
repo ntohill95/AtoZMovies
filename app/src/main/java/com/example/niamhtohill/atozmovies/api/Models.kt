@@ -27,4 +27,7 @@ object Models {
         val overview: String,
         val release_date: String
     ) : Serializable
+
+    data class MoviesGenres(val genres: List<MovieGenre>)
+    data class MovieGenre(val id: Int, val name: String)
 }

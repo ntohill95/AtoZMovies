@@ -15,5 +15,4 @@ data class LocalMovie(val directory: String) {
     val adult: Boolean = false
     val overview: String = ""
     val release_date: String = ""
-
 }

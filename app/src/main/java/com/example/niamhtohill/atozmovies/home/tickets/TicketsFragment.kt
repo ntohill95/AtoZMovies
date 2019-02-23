@@ -1,9 +1,7 @@
 package com.example.niamhtohill.atozmovies.home.tickets
 
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Context
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,27 +14,21 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
-import com.example.niamhtohill.atozmovies.BR
 import com.example.niamhtohill.atozmovies.R
-import com.example.niamhtohill.atozmovies.databinding.FragmentTicketsBinding
-import com.example.niamhtohill.atozmovies.home.HomeViewModel
-import com.example.niamhtohill.atozmovies.home.MyViewModelFactory
+import com.example.niamhtohill.atozmovies.home.HomeActivity
 
 class TicketsFragment : Fragment() {
 
-    private lateinit var viewModel: HomeViewModel
     private lateinit var postcodeEditText: EditText
     private lateinit var submitPostcodeButton: Button
     private lateinit var listView: RecyclerView
     private lateinit var noCinemasTextView: TextView
     private lateinit var progressSpinner: ProgressBar
+    lateinit var parentBaseActivity: HomeActivity
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        viewModel = ViewModelProviders.of(activity!!, MyViewModelFactory(requireActivity().application)).get(HomeViewModel::class.java)
-        val binding: FragmentTicketsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_tickets, container, false)
-        binding.setVariable(BR.viewModel, viewModel)
-        val rootView = binding.root
+        parentBaseActivity = activity as HomeActivity
+        val rootView = inflater.inflate(R.layout.fragment_tickets, container, false)
         listView = rootView.findViewById(R.id.cinema_tickets_list_view)
         listView.layoutManager = LinearLayoutManager(this.context)
         postcodeEditText = rootView.findViewById(R.id.search_cinemas_near)
@@ -46,21 +38,21 @@ class TicketsFragment : Fragment() {
 
         submitPostcodeButton.setOnClickListener {
             view!!.hideKeyboard()
-            viewModel.onPostcodeSearch(postcodeEditText.text.toString().replace(" ", ""))
-            viewModel.searchedPostcode.postValue(postcodeEditText.text.toString().replace(" ", ""))
+            parentBaseActivity.viewModel.onPostcodeSearch(postcodeEditText.text.toString().replace(" ", ""))
+            parentBaseActivity.viewModel.searchedPostcode.postValue(postcodeEditText.text.toString().replace(" ", ""))
             progressSpinner.visibility = View.VISIBLE
         }
-        viewModel.listOfLocalCinemas.observe(this, Observer {
+        parentBaseActivity.viewModel.listOfLocalCinemas.observe(this, Observer {
             noCinemasTextView.visibility = View.INVISIBLE
-            val ticketsAdapter = TicketsAdapter(context!!, viewModel.listOfLocalCinemas.value!!, viewModel)
+            val ticketsAdapter = TicketsAdapter(context!!, parentBaseActivity.viewModel.listOfLocalCinemas.value!!, parentBaseActivity.viewModel)
             listView.adapter = ticketsAdapter
             progressSpinner.visibility = View.INVISIBLE
             ticketsAdapter.setListener(object : TicketsAdapter.AdapterListener {
                 override fun cinemaSelected(name: String) {
-                    viewModel.updateSelectedCinema(name)
+                    parentBaseActivity.viewModel.updateSelectedCinema(name)
                 }
             })
-            if (viewModel.listOfLocalCinemas.value!!.isEmpty()) {
+            if (parentBaseActivity.viewModel.listOfLocalCinemas.value!!.isEmpty()) {
                 noCinemasTextView.visibility = View.VISIBLE
                 progressSpinner.visibility = View.INVISIBLE
             }

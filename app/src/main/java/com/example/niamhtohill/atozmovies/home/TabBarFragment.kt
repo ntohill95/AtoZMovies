@@ -1,36 +1,28 @@
 package com.example.niamhtohill.atozmovies.home
 
-import androidx.lifecycle.ViewModelProviders
 import android.content.Context
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import com.example.niamhtohill.atozmovies.BR
 import com.example.niamhtohill.atozmovies.R
-import com.example.niamhtohill.atozmovies.databinding.FragmentTabBarBinding
 
 class TabBarFragment : Fragment() {
 
     private lateinit var tabBarClickable: TabBarClickable
-    private lateinit var viewModel: HomeViewModel
 
     lateinit var ticketButton: ImageButton
     lateinit var topRatedButton: ImageButton
     private lateinit var favouritesButton: ImageButton
     private lateinit var recommendationButton: ImageButton
     private lateinit var searchButton: ImageButton
+    lateinit var parentBaseActivity: HomeActivity
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        viewModel = ViewModelProviders.of(this, MyViewModelFactory(requireActivity().application)).get(HomeViewModel::class.java)
-        val binding: FragmentTabBarBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab_bar, container, false)
-        binding.setVariable(BR.viewModel, viewModel)
-
-        val rootView = binding.root
+        parentBaseActivity = activity as HomeActivity
+        val rootView = inflater.inflate(R.layout.fragment_tab_bar, container, false)
         ticketButton = rootView.findViewById(R.id.tickets_button)
         ticketButton.setOnClickListener() {
             tabBarClickable.ticketButtonClicked()
