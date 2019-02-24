@@ -15,6 +15,9 @@ import com.example.niamhtohill.atozmovies.home.HomeActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.squareup.picasso.Picasso
 import androidx.recyclerview.widget.LinearLayoutManager
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class MovieDetailFragment : Fragment() {
 
@@ -44,12 +47,13 @@ class MovieDetailFragment : Fragment() {
         movieGenre = rootView.findViewById(R.id.movie_genre_text_view)
         movieGenre.text = parentBaseActivity.viewModel.genresOfMovieSelected(movieSelected.genre_ids).joinToString(", ")
         movieReleaseDate = rootView.findViewById(R.id.movie_date_text_view)
-        movieReleaseDate.text = movieSelected.release_date
+        val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH)
+        val outputFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH)
+        movieReleaseDate.text = outputFormatter.format(inputFormatter.parse(movieSelected.release_date))
         movieRating = rootView.findViewById(R.id.movie_rating_text_view)
-        movieRating.text = movieSelected.vote_average.toString()
+        movieRating.text = movieSelected.vote_average.toString() + "/10"
         movieOverview = rootView.findViewById(R.id.overview_text_text_view)
         movieOverview.text = movieSelected.overview
-
         movieActorsRecyclerView = rootView.findViewById(R.id.actors_recycler_view)
         movieActorsRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         parentBaseActivity.viewModel.castMembers.observe(this, Observer {
