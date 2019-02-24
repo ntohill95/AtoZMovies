@@ -30,4 +30,7 @@ object Models {
 
     data class MoviesGenres(val genres: List<MovieGenre>)
     data class MovieGenre(val id: Int, val name: String)
+    data class MovieCredits(val id: Int, val cast: List<MovieCastMember>, val crew: List<MovieCrewMember>)
+    data class MovieCastMember(val cast_id: Int, val character: String, val credit_id: String, val gender: Int?, val id: Int, val name: String, val order: Int, val profile_path: String?)
+    data class MovieCrewMember(val credit_id: String, val department: String, val gender: Int?, val id: Int, val job: String, val name: String, val profile_path: String?)
 }

@@ -27,7 +27,7 @@ class PopularMoviesFragment : Fragment() {
         progressSpinner.visibility = View.VISIBLE
         listView.layoutManager = LinearLayoutManager(this.context)
         parentBaseActivity.viewModel.onPopularMoviesSearch(API_KEY)
-        parentBaseActivity.viewModel.fetchGenreNames(API_KEY)
+        parentBaseActivity.viewModel.fetchGenreNames()
         parentBaseActivity.viewModel.listOPopularMovies.observe(this, Observer {
             listView.adapter = PopularMoviesAdapter(context!!, parentBaseActivity.viewModel.listOPopularMovies.value!!, parentBaseActivity.viewModel)
             progressSpinner.visibility = View.INVISIBLE

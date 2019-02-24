@@ -84,8 +84,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:backgroundTint="@color/colorPrimaryDark"
-                android:src="@drawable/heart"
                 android:scaleType="center"
+                android:src="@drawable/heart"
                 app:layout_constraintBottom_toTopOf="@+id/bottom_linear_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/top_linear_layout"
@@ -97,8 +97,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:backgroundTint="@color/colorPrimaryDark"
-                android:src="@drawable/list"
                 android:scaleType="center"
+                android:src="@drawable/list"
                 app:layout_constraintBottom_toTopOf="@+id/bottom_linear_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/top_linear_layout"
@@ -133,10 +133,11 @@
                     android:textColor="@color/colorTextIcons"
                     android:textSize="20sp" />
 
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/actors_recycler_view"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="5dp" />
 
                 <TextView

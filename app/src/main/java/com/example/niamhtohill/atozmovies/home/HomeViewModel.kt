@@ -35,9 +35,6 @@ class HomeViewModel(private val application: Application) : ViewModel() {
         MovieDatabaseService.create()
     }
 
-    private val genresDatabaseService by lazy {
-        MovieDatabaseService.create()
-    }
     var listOfLocalCinemas = MutableLiveData<List<Models.CineListCinema>>()
 
     var selectedCinema = MutableLiveData<String>()
@@ -46,10 +43,11 @@ class HomeViewModel(private val application: Application) : ViewModel() {
 
     var listOPopularMovies = MutableLiveData<List<Models.MoviesDBMovie>>()
     var listOfGenres = MutableLiveData<List<Models.MovieGenre>>()
+    var castMembers = MutableLiveData<List<Models.MovieCastMember>>()
     var genresOfMovie = ArrayList<String>()
 
     init {
-        fetchGenreNames(API_KEY)
+        fetchGenreNames()
     }
 
     fun onPostcodeSearch(postcode: String) {
@@ -67,9 +65,9 @@ class HomeViewModel(private val application: Application) : ViewModel() {
         selectedCinema.postValue(cinemaName)
     }
 
-    fun fetchGenreNames(apiKey: String) {
-        disposable = genresDatabaseService
-                .fetchGeneres(apiKey)
+    fun fetchGenreNames() {
+        disposable = moviesDatabaseService
+                .fetchGenres(API_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -77,8 +75,18 @@ class HomeViewModel(private val application: Application) : ViewModel() {
                         { error -> println(error) })
     }
 
+    fun fetchCredits(movieId: Int) {
+        disposable = moviesDatabaseService
+                .fetchCredits(movieId, API_KEY)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { result -> castMembers.postValue(result.cast) },
+                        { error -> println(error) })
+    }
+
     fun genresOfMovieSelected(genreIds: List<Int>): ArrayList<String> {
-        if(genresOfMovie.isNotEmpty()){
+        if (genresOfMovie.isNotEmpty()) {
             genresOfMovie.removeAll(genresOfMovie)
         }
         for (id in genreIds) {

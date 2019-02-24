@@ -10,5 +10,7 @@ const val MOVIES_POPULAR = "/3/movie/popular?api_key="
 
 const val MOVIES_GENRES = "/3/genre/movie/list?api_key="
 
+const val MOVIES_CREDITS = "/3/movie/{movie_id}/credits?api_key"
+
 // TODO REMOVE
 const val API_KEY = "1119711545cd4fbc29520df875c8d677"

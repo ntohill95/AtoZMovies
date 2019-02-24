@@ -30,6 +30,7 @@ class PopularMoviesAdapter(private var context: Context, private val topMovieLis
             val bundle = Bundle()
             bundle.putSerializable("movieSelected", movieSelected as Serializable)
             movieDetailFragment.arguments = bundle
+            // TODO convert MovieDetail to activity instead of fragment - handle onBack better
             val activity = context as AppCompatActivity
             activity.supportFragmentManager.beginTransaction().replace(R.id.central_content_placeholder, movieDetailFragment).commit()
         }
