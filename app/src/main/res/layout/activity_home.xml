@@ -9,7 +9,7 @@
     <FrameLayout
         android:id="@+id/title_bar_placeholder"
         android:layout_width="match_parent"
-        android:layout_height="80dp"/>
+        android:layout_height="60dp"/>
 
     <FrameLayout
         android:id="@+id/central_content_placeholder"
