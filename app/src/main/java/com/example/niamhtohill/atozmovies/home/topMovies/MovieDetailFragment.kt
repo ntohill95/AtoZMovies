@@ -1,5 +1,6 @@
 package com.example.niamhtohill.atozmovies.home.topMovies
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -34,6 +35,7 @@ class MovieDetailFragment : Fragment() {
     private var isSaveFABClicked = false
     lateinit var parentBaseActivity: HomeActivity
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         parentBaseActivity = activity as HomeActivity
         val rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false)
