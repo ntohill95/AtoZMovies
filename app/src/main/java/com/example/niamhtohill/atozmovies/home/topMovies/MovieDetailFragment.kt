@@ -2,6 +2,7 @@ package com.example.niamhtohill.atozmovies.home.topMovies
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -36,6 +37,13 @@ class MovieDetailFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         parentBaseActivity = activity as HomeActivity
         val rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false)
+
+        rootView.setOnTouchListener(object :View.OnTouchListener{
+            override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
+                hideFABMenu()
+                return false
+            }
+        })
         val bundle = arguments!!
         val movieSelected = bundle["movieSelected"] as Models.MoviesDBMovie
         parentBaseActivity.viewModel.fetchCredits(movieSelected.id)
@@ -57,6 +65,13 @@ class MovieDetailFragment : Fragment() {
         movieActorsRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         parentBaseActivity.viewModel.castMembers.observe(this, Observer {
             movieActorsRecyclerView.adapter = ActorAdapter(context!!, parentBaseActivity.viewModel.castMembers.value!!, parentBaseActivity.viewModel)
+        })
+
+        movieActorsRecyclerView.setOnTouchListener(object :View.OnTouchListener{
+            override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
+                hideFABMenu()
+                return false
+            }
         })
 
         saveToFab = rootView.findViewById(R.id.add_to_list_fab)
