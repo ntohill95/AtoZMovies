@@ -10,7 +10,7 @@ object Models {
     data class MoviesApiCinema(val venue_id: String, val name: String, val address: String, val phone: String, val url: String, val distance: String)
     data class MoviesApiShowings(val title: String, val link: String, val time: List<String>)
 
-    data class MoviesDBPopular(val page: Int, val total_results: Int, val total_pages: Int, val results: List<MoviesDBMovie>)
+    data class MoviesDBMovies(val page: Int, val total_results: Int, val total_pages: Int, val results: List<MoviesDBMovie>)
     data class MoviesDBMovie(
         val vote_count: Int,
         val id: Int,

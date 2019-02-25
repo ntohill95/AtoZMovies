@@ -29,5 +29,8 @@
     <string name="user_directory_error">Failed to create user directory</string>
     <string name="create_project_error">create_project_error</string>
 
+    <!--Search Fragment -->
+    <string name="no_search_match">Sorry! There are no films that match your search...</string>
+
 
 </resources>

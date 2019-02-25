@@ -45,6 +45,7 @@ class HomeViewModel(private val application: Application) : ViewModel() {
     var listOfGenres = MutableLiveData<List<Models.MovieGenre>>()
     var castMembers = MutableLiveData<List<Models.MovieCastMember>>()
     var genresOfMovie = ArrayList<String>()
+    var searchResults = MutableLiveData<List<Models.MoviesDBMovie>>()
 
     init {
         fetchGenreNames()
@@ -59,6 +60,16 @@ class HomeViewModel(private val application: Application) : ViewModel() {
                         { result -> listOfLocalCinemas.postValue(result.cinemas) },
                         { error -> println(error) }
                 )
+    }
+
+    fun onSearchFilm(searchString: String) {
+        disposable = moviesDatabaseService
+                .searchForFilm(searchString, API_KEY)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { result -> searchResults.postValue(result.results) },
+                        { error -> println(error) })
     }
 
     fun updateSelectedCinema(cinemaName: String) {

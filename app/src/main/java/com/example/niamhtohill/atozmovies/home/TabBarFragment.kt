@@ -65,7 +65,7 @@ class TabBarFragment : Fragment() {
         }
     }
 
-    fun setImagesToNotSelected(){
+    private fun setImagesToNotSelected() {
         ticketButton.setImageDrawable(resources.getDrawable(R.drawable.ticket_not))
         topRatedButton.setImageDrawable(resources.getDrawable(R.drawable.top_films_not))
         favouritesButton.setImageDrawable(resources.getDrawable(R.drawable.star_not))
@@ -73,7 +73,6 @@ class TabBarFragment : Fragment() {
         searchButton.setImageDrawable(resources.getDrawable(R.drawable.search_not))
     }
 }
-
 
 interface TabBarClickable {
     fun ticketButtonClicked()

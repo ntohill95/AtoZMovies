@@ -40,7 +40,7 @@ class MovieDetailFragment : Fragment() {
         parentBaseActivity = activity as HomeActivity
         val rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false)
 
-        rootView.setOnTouchListener(object :View.OnTouchListener{
+        rootView.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
                 hideFABMenu()
                 return false
@@ -69,7 +69,7 @@ class MovieDetailFragment : Fragment() {
             movieActorsRecyclerView.adapter = ActorAdapter(context!!, parentBaseActivity.viewModel.castMembers.value!!, parentBaseActivity.viewModel)
         })
 
-        movieActorsRecyclerView.setOnTouchListener(object :View.OnTouchListener{
+        movieActorsRecyclerView.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
                 hideFABMenu()
                 return false

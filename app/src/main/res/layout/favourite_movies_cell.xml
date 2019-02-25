@@ -25,6 +25,7 @@
             android:id="@+id/movie_title_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxLines="2"
             android:layout_margin="10dp"
             android:textSize="20sp"
             android:textColor="@color/colorTextIcons"
@@ -41,13 +42,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:maxLines="1"
+                android:lines="1"
+                android:singleLine="true"
+                android:maxWidth="130dp"
                 android:layout_marginStart="10dp"
-                android:text="Horror | " />
+                android:text="Horror |" />
 
             <TextView
                 android:id="@+id/movie_duration_textview"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:text=" 1hr42m" />
         </LinearLayout>
     </LinearLayout>

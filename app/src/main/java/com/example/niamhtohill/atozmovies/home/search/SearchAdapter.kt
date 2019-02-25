@@ -5,8 +5,11 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.niamhtohill.atozmovies.R
+import com.example.niamhtohill.atozmovies.api.Models
+import com.example.niamhtohill.atozmovies.home.HomeViewModel
+import com.squareup.picasso.Picasso
 
-class SearchAdapter(private var context: Context, private val movieList: ArrayList<String>) : RecyclerView.Adapter<SearchViewHolder>() {
+class SearchAdapter(private var context: Context, private val movieList: List<Models.MoviesDBMovie>, private val viewModel: HomeViewModel) : RecyclerView.Adapter<SearchViewHolder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): SearchViewHolder {
         return SearchViewHolder(LayoutInflater.from(context).inflate(R.layout.favourite_movies_cell, p0, false))
     }
@@ -16,7 +19,11 @@ class SearchAdapter(private var context: Context, private val movieList: ArrayLi
     }
 
     override fun onBindViewHolder(p0: SearchViewHolder, p1: Int) {
-        val movieTitle = movieList[p1]
-        p0.movieTitleName.text = movieTitle
+        val movie = movieList[p1]
+        p0.movieTitleName.text = movie.title
+        Picasso.get().load("http://image.tmdb.org/t/p/w185" + movie.poster_path).into(p0.moviePoster)
+        p0.movieVoteAverage.text = " | " + movie.vote_average.toString() + "/10"
+        viewModel.fetchGenreNames()
+        p0.movieGenre.text = viewModel.genresOfMovieSelected(movie.genre_ids).joinToString(", ")
     }
 }
