@@ -2,6 +2,7 @@ package com.example.niamhtohill.atozmovies.home.topMovies
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -42,6 +43,8 @@ class MovieDetailFragment : Fragment() {
     private var favouritesDao: DaoDatabaseFavouriteMovies? = null
     lateinit var movieSelected: Models.MoviesDBMovie
     private lateinit var mDbWorkerThread: DatabaseWorkerThread
+    private val mUiHandler = Handler()
+    private val listOfMovies = ArrayList<DatabaseMovie>()
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -102,6 +105,19 @@ class MovieDetailFragment : Fragment() {
             }
         }
 
+        val taskFetchDB = Runnable {
+            if (db?.favouritesDao()?.getTableById(1)!!.isNotEmpty()) {
+                for (movie in db?.favouritesDao()?.getTableById(1)!![0].movies) {
+                    if (movie.movie_id == movieSelected.id) {
+                        mUiHandler.post {
+                            saveToFavourites.setImageResource(R.drawable.heart_filled)
+                        }
+                    }
+                }
+            }
+        }
+        mDbWorkerThread.postTask(taskFetchDB)
+
         return rootView
     }
 
@@ -127,15 +143,32 @@ class MovieDetailFragment : Fragment() {
 
             val task = Runnable { db?.moviesDao()?.insertMovie(databaseMovie) }
             mDbWorkerThread.postTask(task)
-            val listOfMovies = ArrayList<DatabaseMovie>()
-            listOfMovies.add(databaseMovie)
+            listOfMovies.removeAll(listOfMovies)
+            val taskFetchDB = Runnable {
+                for (movie in db?.favouritesDao()?.getTableById(1)!![0].movies) {
+                    listOfMovies.add(movie)
+                }
+                updateUI(databaseMovie)
+            }
+            mDbWorkerThread.postTask(taskFetchDB)
             val taskFavourites = Runnable { db?.favouritesDao()?.insertFavourite(DatabaseFavouriteMovies(1, listOfMovies)) }
             mDbWorkerThread.postTask(taskFavourites)
-
-            val taskFetchDB = Runnable { println("********** testing " + db?.moviesDao()?.getMovies()!!) }
-            mDbWorkerThread.postTask(taskFetchDB)
         }
         saveToWatch.animate().translationY(resources.getDimension(R.dimen.standard_105))
+    }
+
+    private fun updateUI(databaseMovie: DatabaseMovie) {
+        if (!listOfMovies.contains(databaseMovie)) {
+            listOfMovies.add(databaseMovie)
+            mUiHandler.post { saveToFavourites.setImageResource(R.drawable.heart_filled) }
+            val taskFavourites = Runnable { db?.favouritesDao()?.insertFavourite(DatabaseFavouriteMovies(1, listOfMovies)) }
+            mDbWorkerThread.postTask(taskFavourites)
+        } else {
+            listOfMovies.remove(databaseMovie)
+            mUiHandler.post { saveToFavourites.setImageResource(R.drawable.heart) }
+            val taskFavourites = Runnable { db?.favouritesDao()?.insertFavourite(DatabaseFavouriteMovies(1, listOfMovies)) }
+            mDbWorkerThread.postTask(taskFavourites)
+        }
     }
 
     private fun hideFABMenu() {

@@ -23,4 +23,3 @@ data class DatabaseMovie(
     val overview: String,
     val release_date: String
 )
-
