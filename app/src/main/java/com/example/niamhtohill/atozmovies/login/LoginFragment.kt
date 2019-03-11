@@ -22,8 +22,10 @@ class LoginFragment : Fragment(), LifecycleOwner {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_login, container, false)
+
         viewModel = ViewModelProviders.of(this, MyViewModelFactory(requireActivity().application)).get(LoginViewModel::class.java)
         val binding: FragmentLoginBinding = DataBindingUtil.setContentView(requireActivity(), R.layout.fragment_login)
+
         binding.viewModel = viewModel
         binding.setVariable(BR.viewModel, viewModel)
         binding.setLifecycleOwner(viewLifecycleOwner)

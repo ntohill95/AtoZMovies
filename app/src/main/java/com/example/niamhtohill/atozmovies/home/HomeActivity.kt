@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProviders
 import com.example.niamhtohill.atozmovies.R
+import com.example.niamhtohill.atozmovies.data.AppDatabase
+import com.example.niamhtohill.atozmovies.data.DaoDatabaseMovie
 import com.example.niamhtohill.atozmovies.home.favourites.FavouritesFragment
 import com.example.niamhtohill.atozmovies.home.recommendation.RecommendationFragment
 import com.example.niamhtohill.atozmovies.home.search.SearchFragment
@@ -27,9 +29,13 @@ class HomeActivity : AppCompatActivity(), LifecycleOwner, TabBarClickable {
     private var recommendationFragment = RecommendationFragment()
     private var searchFragment = SearchFragment()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    private var db: AppDatabase? = null
+    private var movieDao: DaoDatabaseMovie? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        db = AppDatabase.getAppDatabase(this)
+
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         viewModel = ViewModelProviders.of(this, MyViewModelFactory(application)).get(HomeViewModel::class.java)
 

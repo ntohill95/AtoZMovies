@@ -14,11 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.niamhtohill.atozmovies.R
 import com.example.niamhtohill.atozmovies.api.Models
+import com.example.niamhtohill.atozmovies.data.*
 import com.example.niamhtohill.atozmovies.home.HomeActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.squareup.picasso.Picasso
 import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MovieDetailFragment : Fragment() {
 
@@ -35,8 +37,20 @@ class MovieDetailFragment : Fragment() {
     private var isSaveFABClicked = false
     lateinit var parentBaseActivity: HomeActivity
 
+    private var db: AppDatabase? = null
+    private var moviesDao: DaoDatabaseMovie? = null
+    private var favouritesDao: DaoDatabaseFavouriteMovies? = null
+    lateinit var movieSelected: Models.MoviesDBMovie
+    private lateinit var mDbWorkerThread: DatabaseWorkerThread
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        db = AppDatabase.getAppDatabase(context!!)
+        moviesDao = db?.moviesDao()
+        favouritesDao = db?.favouritesDao()
+        mDbWorkerThread = DatabaseWorkerThread("dbWorkerThread")
+        mDbWorkerThread.start()
+
         parentBaseActivity = activity as HomeActivity
         val rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false)
 
@@ -47,7 +61,7 @@ class MovieDetailFragment : Fragment() {
             }
         })
         val bundle = arguments!!
-        val movieSelected = bundle["movieSelected"] as Models.MoviesDBMovie
+        movieSelected = bundle["movieSelected"] as Models.MoviesDBMovie
         parentBaseActivity.viewModel.fetchCredits(movieSelected.id)
         movieTitle = rootView.findViewById(R.id.movie_title_text_view)
         movieTitle.text = movieSelected.title
@@ -94,6 +108,33 @@ class MovieDetailFragment : Fragment() {
     private fun showFABMenu() {
         isSaveFABClicked = true
         saveToFavourites.animate().translationY(resources.getDimension(R.dimen.standard_55))
+        saveToFavourites.setOnClickListener {
+            val databaseMovie = DatabaseMovie(
+                    movieSelected.id,
+                    movieSelected.vote_count,
+                    movieSelected.vote_average,
+                    movieSelected.video,
+                    movieSelected.title,
+                    movieSelected.popularity,
+                    movieSelected.poster_path,
+                    movieSelected.original_language,
+                    movieSelected.original_title,
+                    movieSelected.genre_ids,
+                    movieSelected.backdrop_path,
+                    movieSelected.adult,
+                    movieSelected.overview,
+                    movieSelected.release_date)
+
+            val task = Runnable { db?.moviesDao()?.insertMovie(databaseMovie) }
+            mDbWorkerThread.postTask(task)
+            val listOfMovies = ArrayList<DatabaseMovie>()
+            listOfMovies.add(databaseMovie)
+            val taskFavourites = Runnable { db?.favouritesDao()?.insertFavourite(DatabaseFavouriteMovies(1, listOfMovies)) }
+            mDbWorkerThread.postTask(taskFavourites)
+
+            val taskFetchDB = Runnable { println("********** testing " + db?.moviesDao()?.getMovies()!!) }
+            mDbWorkerThread.postTask(taskFetchDB)
+        }
         saveToWatch.animate().translationY(resources.getDimension(R.dimen.standard_105))
     }
 
@@ -101,5 +142,10 @@ class MovieDetailFragment : Fragment() {
         isSaveFABClicked = false
         saveToFavourites.animate().translationY(0f)
         saveToWatch.animate().translationY(0f)
+    }
+
+    override fun onDestroy() {
+        mDbWorkerThread.quit()
+        super.onDestroy()
     }
 }
