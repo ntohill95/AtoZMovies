@@ -10,6 +10,7 @@ import com.example.niamhtohill.atozmovies.api.API_KEY
 import com.example.niamhtohill.atozmovies.api.CinemaPostcodeService
 import com.example.niamhtohill.atozmovies.api.Models
 import com.example.niamhtohill.atozmovies.api.MovieDatabaseService
+import com.example.niamhtohill.atozmovies.data.DatabaseWorkerThread
 import com.example.niamhtohill.atozmovies.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,6 +18,8 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 class HomeViewModel(private val application: Application) : ViewModel() {
+
+    lateinit var mDbWorkerThread: DatabaseWorkerThread
 
     fun onLogoutClicked(view: View) {
         logoutOfFirebase()
@@ -49,6 +52,10 @@ class HomeViewModel(private val application: Application) : ViewModel() {
 
     init {
         fetchGenreNames()
+    }
+
+    fun fetchFavourites(runnable: Runnable) {
+        mDbWorkerThread.postTask(runnable)
     }
 
     fun onPostcodeSearch(postcode: String) {

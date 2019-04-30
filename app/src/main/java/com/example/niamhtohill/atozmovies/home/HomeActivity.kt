@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.niamhtohill.atozmovies.R
 import com.example.niamhtohill.atozmovies.data.AppDatabase
 import com.example.niamhtohill.atozmovies.data.DaoDatabaseMovie
+import com.example.niamhtohill.atozmovies.data.DatabaseWorkerThread
 import com.example.niamhtohill.atozmovies.home.favourites.FavouritesFragment
 import com.example.niamhtohill.atozmovies.home.recommendation.RecommendationFragment
 import com.example.niamhtohill.atozmovies.home.search.SearchFragment
@@ -38,6 +39,9 @@ class HomeActivity : AppCompatActivity(), LifecycleOwner, TabBarClickable {
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         viewModel = ViewModelProviders.of(this, MyViewModelFactory(application)).get(HomeViewModel::class.java)
+
+        viewModel.mDbWorkerThread = DatabaseWorkerThread("dbWorkerThread")
+        viewModel.mDbWorkerThread.start()
 
         setContentView(R.layout.activity_home)
         supportFragmentManager
@@ -97,5 +101,10 @@ class HomeActivity : AppCompatActivity(), LifecycleOwner, TabBarClickable {
                 .commit()
         supportFragmentManager.executePendingTransactions()
         titleBarFragment.titleBarTextView.text = resources.getString(R.string.search)
+    }
+
+    override fun onDestroy() {
+        viewModel.mDbWorkerThread.quit()
+        super.onDestroy()
     }
 }

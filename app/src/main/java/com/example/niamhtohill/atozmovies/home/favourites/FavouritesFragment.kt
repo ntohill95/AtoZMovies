@@ -8,10 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.niamhtohill.atozmovies.R
-import com.example.niamhtohill.atozmovies.data.AppDatabase
-import com.example.niamhtohill.atozmovies.data.DaoDatabaseFavouriteMovies
-import com.example.niamhtohill.atozmovies.data.DaoDatabaseMovie
-import com.example.niamhtohill.atozmovies.data.DatabaseWorkerThread
+import com.example.niamhtohill.atozmovies.data.*
 import com.example.niamhtohill.atozmovies.home.HomeActivity
 
 class FavouritesFragment : Fragment() {
@@ -20,8 +17,8 @@ class FavouritesFragment : Fragment() {
     private var db: AppDatabase? = null
     private var moviesDao: DaoDatabaseMovie? = null
     private var favouritesDao: DaoDatabaseFavouriteMovies? = null
-    private lateinit var mDbWorkerThread: DatabaseWorkerThread
-
+    private var favouritesMovieList = ArrayList<DatabaseMovie>()
+    private lateinit var listView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         parentBaseActivity = activity as HomeActivity
@@ -29,22 +26,24 @@ class FavouritesFragment : Fragment() {
         db = AppDatabase.getAppDatabase(context!!)
         moviesDao = db?.moviesDao()
         favouritesDao = db?.favouritesDao()
-        mDbWorkerThread = DatabaseWorkerThread("dbWorkerThread")
-        mDbWorkerThread.start()
+        listView = rootView.findViewById(R.id.favourites_list_view)
 
-        val listView: RecyclerView = rootView.findViewById(R.id.favourites_list_view)
-//        listView.layoutManager = LinearLayoutManager(this.context)
-//        listView.adapter = FavouritesAdapter(context!!, generatedFakeData())
+        listView.layoutManager = LinearLayoutManager(this.context)
+        listView.adapter = FavouritesAdapter(context!!, favouritesMovieList)
 
-        val taskFetchDB = Runnable {
-            if (db?.favouritesDao()?.getTableById(1)!!.isNotEmpty()) {
-                for (movie in db?.favouritesDao()?.getTableById(1)!![0].movies) {
-                    println("********** size = "+ db?.favouritesDao()?.getTableById(1)!![0].movies.size)
+        parentBaseActivity.viewModel.fetchFavourites(taskFetchDB)
+
+        return rootView
+    }
+
+    private val taskFetchDB = Runnable {
+        if (db?.favouritesDao()?.getTableById(1)!!.isNotEmpty()) {
+            for (movie in db?.favouritesDao()?.getTableById(1)!![0].movies) {
+                if (!favouritesMovieList.contains(movie)) {
+                    favouritesMovieList.add(movie)
+                    listView.adapter!!.notifyDataSetChanged()
                 }
             }
         }
-        mDbWorkerThread.postTask(taskFetchDB)
-
-        return rootView
     }
 }
