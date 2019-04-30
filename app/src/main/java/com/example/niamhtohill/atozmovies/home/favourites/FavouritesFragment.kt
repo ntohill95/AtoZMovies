@@ -41,7 +41,16 @@ class FavouritesFragment : Fragment() {
             for (movie in db?.favouritesDao()?.getTableById(1)!![0].movies) {
                 if (!favouritesMovieList.contains(movie)) {
                     favouritesMovieList.add(movie)
-                    listView.adapter!!.notifyDataSetChanged()
+                    activity!!.runOnUiThread {
+                        listView.adapter!!.notifyDataSetChanged()
+                    }                }
+            }
+            for (movie in favouritesMovieList) {
+                if (!(db?.favouritesDao()?.getTableById(1)!![0].movies.contains(movie))) {
+                    favouritesMovieList.remove(movie)
+                    activity!!.runOnUiThread {
+                        listView.adapter!!.notifyDataSetChanged()
+                    }
                 }
             }
         }
