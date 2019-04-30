@@ -38,6 +38,13 @@ class FavouritesFragment : Fragment() {
         return rootView
     }
 
+    override fun onResume() {
+        super.onResume()
+        println("********* on resume reload list")
+        parentBaseActivity.viewModel.fetchFavourites(taskFetchDB)
+
+    }
+
     private val taskFetchDB = Runnable {
         if (db?.favouritesDao()?.getTableById(1)!!.isNotEmpty()) {
             for (movie in db?.favouritesDao()?.getTableById(1)!![0].movies) {

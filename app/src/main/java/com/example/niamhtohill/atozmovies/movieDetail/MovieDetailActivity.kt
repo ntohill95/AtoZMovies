@@ -42,7 +42,6 @@ class MovieDetailActivity : AppCompatActivity(), LifecycleOwner {
 
         val bundle = intent.extras
         movieSelected = bundle.getSerializable("movieSelected") as Models.MoviesDBMovie
-        println("*********** movie selected =  " + movieSelected)
         viewModel.fetchCredits(movieSelected.id)
         movie_title_text_view.text = movieSelected.title
         Picasso.get().load("http://image.tmdb.org/t/p/w185" + movieSelected.poster_path).into(movie_poster_image_view)
