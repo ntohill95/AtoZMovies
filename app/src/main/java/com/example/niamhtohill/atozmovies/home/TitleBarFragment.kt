@@ -16,11 +16,14 @@ class TitleBarFragment : Fragment() {
     lateinit var parentBaseActivity: HomeActivity
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         parentBaseActivity = activity as HomeActivity
         val rootView = inflater.inflate(R.layout.fragment_title_bar, container, false)
         logoutButton = rootView.findViewById(R.id.logout_button)
         titleBarTextView = rootView.findViewById(R.id.title_text_view)
+        logoutButton.setOnClickListener {
+            parentBaseActivity.viewModel.onLogoutClicked(it)
+            println("********** logout clicked")
+        }
         return rootView
     }
 }

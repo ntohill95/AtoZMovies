@@ -3,12 +3,11 @@ package com.example.niamhtohill.atozmovies.home.search
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.example.niamhtohill.atozmovies.R
 import com.example.niamhtohill.atozmovies.api.Models
-import com.example.niamhtohill.atozmovies.data.databaseMovieToMoviesDBMovieMapper
 import com.example.niamhtohill.atozmovies.home.HomeViewModel
 import com.example.niamhtohill.atozmovies.movieDetail.MovieDetailActivity
 import com.squareup.picasso.Picasso
