@@ -27,7 +27,6 @@ class SearchAdapter(private var context: Context, private val movieList: List<Mo
             p0.moviePoster.setImageDrawable(context.resources.getDrawable(R.drawable.no_image_available))
         }
         p0.movieVoteAverage.text = " | " + movie.vote_average.toString() + "/10"
-        viewModel.fetchGenreNames()
         p0.movieGenre.text = viewModel.genresOfMovieSelected(movie.genre_ids).joinToString(", ")
     }
 }

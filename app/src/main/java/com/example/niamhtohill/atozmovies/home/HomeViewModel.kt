@@ -51,7 +51,9 @@ class HomeViewModel(private val application: Application) : ViewModel() {
     var searchResults = MutableLiveData<List<Models.MoviesDBMovie>>()
 
     init {
-        fetchGenreNames()
+        if (listOfGenres.value == null) {
+            fetchGenreNames()
+        }
     }
 
     fun fetchFavourites(runnable: Runnable) {
@@ -89,8 +91,12 @@ class HomeViewModel(private val application: Application) : ViewModel() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        { result -> listOfGenres.postValue(result.genres) },
-                        { error -> println(error) })
+                        { result ->
+                            listOfGenres.postValue(result.genres)
+                        },
+                        { error ->
+                            println(error)
+                        })
     }
 
     fun fetchCredits(movieId: Int) {
@@ -108,8 +114,10 @@ class HomeViewModel(private val application: Application) : ViewModel() {
             genresOfMovie.removeAll(genresOfMovie)
         }
         for (id in genreIds) {
-            val genre = listOfGenres.value!!.stream().filter { genre -> genre.id == id }.findFirst().orElse(Models.MovieGenre(0, ""))
-            genresOfMovie.add(genre.name)
+            if (listOfGenres.value != null) {
+                val genre = listOfGenres.value!!.stream().filter { genre -> genre.id == id }.findFirst().orElse(Models.MovieGenre(0, ""))
+                genresOfMovie.add(genre.name)
+            }
         }
         return genresOfMovie
     }

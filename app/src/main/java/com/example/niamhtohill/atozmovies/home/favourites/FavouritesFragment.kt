@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import com.example.niamhtohill.atozmovies.R
 import com.example.niamhtohill.atozmovies.data.*
 import com.example.niamhtohill.atozmovies.home.HomeActivity
@@ -27,12 +28,13 @@ class FavouritesFragment : Fragment() {
         moviesDao = db?.moviesDao()
         favouritesDao = db?.favouritesDao()
         listView = rootView.findViewById(R.id.favourites_list_view)
-
         listView.layoutManager = LinearLayoutManager(this.context)
-        listView.adapter = FavouritesAdapter(context!!, favouritesMovieList)
-
+        listView.adapter = FavouritesAdapter(context!!, favouritesMovieList, parentBaseActivity.viewModel)
         parentBaseActivity.viewModel.fetchFavourites(taskFetchDB)
 
+        parentBaseActivity.viewModel.listOfGenres.observe(this, Observer {
+            listView.adapter!!.notifyDataSetChanged()
+        })
         return rootView
     }
 
@@ -43,7 +45,8 @@ class FavouritesFragment : Fragment() {
                     favouritesMovieList.add(movie)
                     activity!!.runOnUiThread {
                         listView.adapter!!.notifyDataSetChanged()
-                    }                }
+                    }
+                }
             }
             for (movie in favouritesMovieList) {
                 if (!(db?.favouritesDao()?.getTableById(1)!![0].movies.contains(movie))) {

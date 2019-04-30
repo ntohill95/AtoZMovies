@@ -23,6 +23,7 @@
     <TextView
         android:id="@+id/actor_character_textView"
         android:layout_width="match_parent"
+        android:maxLines="3"
         android:textSize="12sp"
         android:text="character"
         android:layout_height="wrap_content" />
