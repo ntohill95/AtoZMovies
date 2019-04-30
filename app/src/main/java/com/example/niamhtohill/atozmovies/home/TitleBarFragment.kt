@@ -22,7 +22,6 @@ class TitleBarFragment : Fragment() {
         titleBarTextView = rootView.findViewById(R.id.title_text_view)
         logoutButton.setOnClickListener {
             parentBaseActivity.viewModel.onLogoutClicked(it)
-            println("********** logout clicked")
         }
         return rootView
     }

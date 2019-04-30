@@ -28,7 +28,7 @@ class LoginFragment : Fragment(), LifecycleOwner {
 
         binding.viewModel = viewModel
         binding.setVariable(BR.viewModel, viewModel)
-        binding.setLifecycleOwner(viewLifecycleOwner)
+        binding.lifecycleOwner = viewLifecycleOwner
 
         lottieAnimationView = rootView.findViewById(R.id.lottie_film_animation)
 
@@ -39,7 +39,12 @@ class LoginFragment : Fragment(), LifecycleOwner {
         })
         viewModel.loading.observe(this, Observer {
             if (viewModel.loading.value!!) {
+                println("************ is loading true")
                 lottieAnimationView.playAnimation()
+            }else{
+                println("************ is loading false")
+                lottieAnimationView.cancelAnimation()
+
             }
         })
         return rootView

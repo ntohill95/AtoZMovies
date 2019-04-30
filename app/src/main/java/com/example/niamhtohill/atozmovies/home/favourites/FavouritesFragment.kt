@@ -40,7 +40,6 @@ class FavouritesFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        println("********* on resume reload list")
         parentBaseActivity.viewModel.fetchFavourites(taskFetchDB)
 
     }

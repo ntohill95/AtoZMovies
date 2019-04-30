@@ -55,7 +55,6 @@ class CinemasViewModel(private var application: Application) : ViewModel() {
         for (cinema in listOfMoviesAPiCinemas.value!!) {
             if (cinema.venue_id == selectedCinemaId.value) {
                 selectedCinema.postValue(cinema)
-                println("******** SELECTED CINEMA" + cinema)
             }
         }
     }

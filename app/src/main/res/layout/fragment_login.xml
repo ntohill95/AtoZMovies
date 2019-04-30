@@ -142,7 +142,7 @@
             app:layout_constraintTop_toBottomOf="@id/linearLayout"
             app:layout_constraintBottom_toTopOf="@id/textView"
             app:lottie_loop="true"
-            app:lottie_autoPlay="false"
+            app:lottie_autoPlay="true"
             app:lottie_fileName="movie.json" />
 
 
