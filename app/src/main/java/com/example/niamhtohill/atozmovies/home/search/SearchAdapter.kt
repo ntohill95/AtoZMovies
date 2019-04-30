@@ -1,13 +1,18 @@
 package com.example.niamhtohill.atozmovies.home.search
 
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.niamhtohill.atozmovies.R
 import com.example.niamhtohill.atozmovies.api.Models
+import com.example.niamhtohill.atozmovies.data.databaseMovieToMoviesDBMovieMapper
 import com.example.niamhtohill.atozmovies.home.HomeViewModel
+import com.example.niamhtohill.atozmovies.movieDetail.MovieDetailActivity
 import com.squareup.picasso.Picasso
+import java.io.Serializable
 
 class SearchAdapter(private var context: Context, private val movieList: List<Models.MoviesDBMovie>, private val viewModel: HomeViewModel) : RecyclerView.Adapter<SearchViewHolder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): SearchViewHolder {
@@ -28,5 +33,14 @@ class SearchAdapter(private var context: Context, private val movieList: List<Mo
         }
         p0.movieVoteAverage.text = " | " + movie.vote_average.toString() + "/10"
         p0.movieGenre.text = viewModel.genresOfMovieSelected(movie.genre_ids).joinToString(", ")
+
+        p0.itemView.setOnClickListener {
+            val movieSelected = (movie)
+            val bundle = Bundle()
+            bundle.putSerializable("movieSelected", movieSelected as Serializable)
+            val intent = Intent(context, MovieDetailActivity::class.java)
+            intent.putExtras(bundle)
+            context.startActivity(intent)
+        }
     }
 }
