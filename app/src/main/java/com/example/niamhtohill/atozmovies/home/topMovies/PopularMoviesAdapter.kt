@@ -1,14 +1,15 @@
 package com.example.niamhtohill.atozmovies.home.topMovies
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.niamhtohill.atozmovies.R
 import com.example.niamhtohill.atozmovies.api.Models
 import com.example.niamhtohill.atozmovies.home.HomeViewModel
+import com.example.niamhtohill.atozmovies.movieDetail.MovieDetailActivity
 import java.io.Serializable
 
 class PopularMoviesAdapter(private var context: Context, private val topMovieList: List<Models.MoviesDBMovie>, private val viewModel: HomeViewModel) : RecyclerView.Adapter<PopularMoviesViewHolder>() {
@@ -26,13 +27,11 @@ class PopularMoviesAdapter(private var context: Context, private val topMovieLis
         p0.topMovieRating.text = (p1 + 1).toString() + " ."
         p0.itemView.setOnClickListener {
             val movieSelected = viewModel.listOPopularMovies.value!![p1]
-            val movieDetailFragment = MovieDetailFragment()
             val bundle = Bundle()
             bundle.putSerializable("movieSelected", movieSelected as Serializable)
-            movieDetailFragment.arguments = bundle
-            // TODO convert MovieDetail to activity instead of fragment - handle onBack better
-            val activity = context as AppCompatActivity
-            activity.supportFragmentManager.beginTransaction().replace(R.id.central_content_placeholder, movieDetailFragment).commit()
+            val intent = Intent(context, MovieDetailActivity::class.java)
+            intent.putExtras(bundle)
+            context.startActivity(intent)
         }
     }
 }

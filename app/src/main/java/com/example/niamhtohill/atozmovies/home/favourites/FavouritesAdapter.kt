@@ -1,16 +1,16 @@
 package com.example.niamhtohill.atozmovies.home.favourites
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import com.example.niamhtohill.atozmovies.R
 import com.example.niamhtohill.atozmovies.data.DatabaseMovie
 import com.example.niamhtohill.atozmovies.data.databaseMovieToMoviesDBMovieMapper
 import com.example.niamhtohill.atozmovies.home.HomeViewModel
-import com.example.niamhtohill.atozmovies.home.topMovies.MovieDetailFragment
+import com.example.niamhtohill.atozmovies.movieDetail.MovieDetailActivity
 import com.squareup.picasso.Picasso
 import java.io.Serializable
 
@@ -34,13 +34,11 @@ class FavouritesAdapter(private var context: Context, private val movieList: Arr
 
             holder.itemView.setOnClickListener {
                 val movieSelected = databaseMovieToMoviesDBMovieMapper(movie)
-                val movieDetailFragment = MovieDetailFragment()
                 val bundle = Bundle()
                 bundle.putSerializable("movieSelected", movieSelected as Serializable)
-                movieDetailFragment.arguments = bundle
-                // TODO convert MovieDetail to activity instead of fragment - handle onBack better
-                val activity = context as AppCompatActivity
-                activity.supportFragmentManager.beginTransaction().replace(R.id.central_content_placeholder, movieDetailFragment).commit()
+                val intent = Intent(context, MovieDetailActivity::class.java)
+                intent.putExtras(bundle)
+                context.startActivity(intent)
             }
         }
     }

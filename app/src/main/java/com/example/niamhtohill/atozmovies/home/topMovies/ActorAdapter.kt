@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.niamhtohill.atozmovies.R
 import com.example.niamhtohill.atozmovies.api.Models
-import com.example.niamhtohill.atozmovies.home.HomeViewModel
+import com.example.niamhtohill.atozmovies.movieDetail.MovieDetailViewModel
 import com.squareup.picasso.Picasso
 
-class ActorAdapter(var context: Context, private val movieCast: List<Models.MovieCastMember>, private val viewModel: HomeViewModel) : RecyclerView.Adapter<ActorViewHolder>() {
+class ActorAdapter(var context: Context, private val movieCast: List<Models.MovieCastMember>, private val viewModel: MovieDetailViewModel) : RecyclerView.Adapter<ActorViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorViewHolder {
         return ActorViewHolder(LayoutInflater.from(context).inflate(R.layout.fragment_actor_cell, parent, false))
     }

@@ -48,9 +48,11 @@ class FavouritesFragment : Fragment() {
                     }
                 }
             }
-            for (movie in favouritesMovieList) {
+            val iterator = favouritesMovieList.iterator()
+            while (iterator.hasNext()) {
+                val movie = iterator.next()
                 if (!(db?.favouritesDao()?.getTableById(1)!![0].movies.contains(movie))) {
-                    favouritesMovieList.remove(movie)
+                    iterator.remove()
                     activity!!.runOnUiThread {
                         listView.adapter!!.notifyDataSetChanged()
                     }
