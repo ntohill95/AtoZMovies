@@ -41,7 +41,6 @@ class FavouritesFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         parentBaseActivity.viewModel.fetchFavourites(taskFetchDB)
-
     }
 
     private val taskFetchDB = Runnable {

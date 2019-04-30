@@ -41,10 +41,9 @@ class LoginFragment : Fragment(), LifecycleOwner {
             if (viewModel.loading.value!!) {
                 println("************ is loading true")
                 lottieAnimationView.playAnimation()
-            }else{
+            } else {
                 println("************ is loading false")
                 lottieAnimationView.cancelAnimation()
-
             }
         })
         return rootView
